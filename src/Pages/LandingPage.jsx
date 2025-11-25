@@ -216,7 +216,7 @@ const LandingPage = () => {
               href="#admissions"
               className="rounded-full bg-gradient-to-r from-blue-600 to-sky-500 px-4 sm:px-6 py-3 text-xs sm:text-sm font-semibold text-white shadow-md transition hover:shadow-lg hover:from-blue-700 hover:to-sky-600 whitespace-nowrap"
             >
-              Apply for Admission
+              Apply for Admissions
             </a>
             <a
               href="#mission"

@@ -1,9 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState, lazy, Suspense } from 'react'
 import { Link } from 'react-router-dom';
 import TextCard from '../components/TextCard';
-import { TeamTestimonials } from '../components/TeamTeastimonials';
 import { SpotlightCard } from '../components/SpotlightCard';
-import Gallery from '../components/GalleryLanding';
+
+// Lazy load heavy components
+const TeamTestimonials = lazy(() => import('../components/TeamTeastimonials').then(module => ({ default: module.TeamTestimonials })));
+const Gallery = lazy(() => import('../components/GalleryLanding'));
 
 import { GraduationCap, Trophy, Award, Medal, Star } from 'lucide-react';
 import videoSrc from '../assets/Hero vid.mp4';
@@ -290,7 +292,9 @@ const LandingPage = () => {
       
       {/* Gallery Component */}
       <div className="mx-auto max-w-7xl px-6 pt-8">
-        <Gallery />
+        <Suspense fallback={<div className="flex items-center justify-center py-12"><div className="text-slate-600">Loading gallery...</div></div>}>
+          <Gallery />
+        </Suspense>
       </div>
       
       {/* View More Button */}
@@ -480,8 +484,9 @@ const LandingPage = () => {
         </p>
       </div>
       
-      <TeamTestimonials 
-        testimonials={[
+      <Suspense fallback={<div className="flex items-center justify-center py-12"><div className="text-slate-600">Loading testimonials...</div></div>}>
+        <TeamTestimonials 
+          testimonials={[
           {
             name: "Dr. John Smith",
             designation: "Principal",
@@ -503,6 +508,7 @@ const LandingPage = () => {
         ]}
         autoplay={true}
       />
+      </Suspense>
     </section>
 
  

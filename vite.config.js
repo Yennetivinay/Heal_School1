@@ -13,5 +13,16 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     assetsDir: 'assets',
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
+          'framer-motion': ['framer-motion'],
+          'lucide-icons': ['lucide-react'],
+          'lottie': ['@lottiefiles/dotlottie-react'],
+        },
+      },
+    },
+    chunkSizeWarningLimit: 1000,
   }
 })

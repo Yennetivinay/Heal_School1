@@ -1,10 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react'
-import Footer from '../components/Footer';
+import { Link } from 'react-router-dom';
 import TextCard from '../components/TextCard';
-import CardCarousel from '../components/CardCarousel';
+import { TeamTestimonials } from '../components/TeamTeastimonials';
 import { SpotlightCard } from '../components/SpotlightCard';
-import { GraduationCap } from 'lucide-react';
+import Gallery from '../components/GalleryLanding';
+
+import { GraduationCap, Trophy, Award, Medal, Star } from 'lucide-react';
 import videoSrc from '../assets/Hero vid.mp4';
+import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 
 
 // Simple Lazy Video Component - Loads only when visible, pauses when out of view
@@ -183,7 +186,7 @@ const LandingPage = () => {
         </div>
       </div>
       <div 
-        className={`fixed top-0 left-0 right-0 z-10 mx-auto max-w-7xl px-6 pt-8 pb-28 text-center h-screen flex flex-col justify-center transition-opacity duration-300 ${
+        className={`fixed top-0 left-0 right-0 z-10 mx-auto max-w-7xl px-6 pt-14 pb-28 text-center h-screen flex flex-col justify-center transition-opacity duration-300 ${
           contentVisible ? 'opacity-100' : 'opacity-0 pointer-events-none'
         }`}
       >
@@ -198,15 +201,10 @@ const LandingPage = () => {
               School
             </span>
           </h1>
-          <p className="mx-auto mt-4 max-w-3xl text-base text-white/90 drop-shadow sm:text-lg min-h-[4rem]">
-            {typedText}
-            {isTyping && typedText.length < FULL_TEXT.length && (
-              <span className="animate-pulse">|</span>
-            )}
-          </p>
+         
           <div 
             ref={buttonsRef} 
-            className={`mt-30 flex flex-nowrap items-center justify-center gap-3 transition-all duration-700 ease-out ${
+            className={`mt-60 flex flex-nowrap items-center justify-center gap-3 transition-all duration-700 ease-out ${
               showButtons 
                 ? 'opacity-100 translate-y-0' 
                 : 'opacity-0 translate-y-8'
@@ -230,7 +228,7 @@ const LandingPage = () => {
     
 
     {/* Our Mission & Vision */}
-    <section id="vision" className="mx-auto max-w-7xl px-6 py-20">
+    <section id="vision" className="mx-auto max-w-7xl px-6 py-12">
       <div className="grid gap-8 md:grid-cols-2">
         {/* Our Mission */}
         <TextCard
@@ -258,48 +256,223 @@ const LandingPage = () => {
       </div>
     </section>
 
+    {/* Gallery Section */}
+    <section id="gallery" className="w-full mb-5 pb-10 bg-gradient-to-br from-slate-100 via-slate-50 to-slate-100 rounded-3xl overflow-hidden">
+      <div className="mx-auto max-w-7xl px-6">
+      {/* Text and Illustration Section */}
+      
+      <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-stretch">
+          {/* Text Content */}
+          <div className="space-y-6 flex flex-col justify-center pl-4 md:pl-6 lg:pl-8">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900 leading-tight">
+              We are on a mission to transform lives through quality education and compassionate care
+            </h2>
+            <p className="text-lg md:text-xl text-slate-700 leading-relaxed">
+              At Heal Paradise School, we believe every child deserves access to world-class education, regardless of their circumstances. Through our comprehensive scholarship program and residential care, we're building a future where every student can dream, achieve, and inspire.
+            </p>
+          </div>
+
+          {/* Illustration/Cartoon */}
+          <div className="flex items-center justify-center h-full min-h-[300px] md:min-h-[500px] w-full">
+            <div className="relative w-full h-full bg-gradient-to-br from-blue-50/50 via-sky-50/30 to-transparent rounded-3xl p-4 md:p-6 lg:p-8 overflow-hidden">
+              <div className="relative w-full h-full flex items-center justify-center rounded-3xl overflow-hidden">
+                <DotLottieReact 
+                  src="https://lottie.host/4d9ea1cd-2ace-4050-b163-f474e23c12ff/RKARS6NZe4.lottie"
+                  loop
+                  autoplay
+                  className="w-full h-full rounded-3xl"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      {/* Gallery Component */}
+      <div className="mx-auto max-w-7xl px-6 pt-8">
+        <Gallery />
+      </div>
+      
+      {/* View More Button */}
+      <div className="mx-auto max-w-7xl px-6">
+      <div className="flex justify-center pt-8">
+        <Link
+          to="/gallery"
+          className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-sky-500 text-white font-semibold rounded-full shadow-lg hover:shadow-xl hover:from-blue-700 hover:to-sky-600 transition-all duration-300 hover:scale-105"
+        >
+          View More
+          <svg
+            className="w-5 h-5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M19 9l-7 7-7-7"
+            />
+          </svg>
+        </Link>
+      </div>
+      </div>
+
+      {/* Award Cards Section */}
+      <div className="mx-auto max-w-7xl px-6">
+      <div className="mt-12 md:mt-16">
+        <h3 className="text-2xl md:text-3xl font-bold text-center text-slate-900 mb-8 md:mb-12">
+          Our Achievements & Recognition
+        </h3>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+          {/* Award Card 1 */}
+          <div className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-amber-50 via-yellow-50 to-amber-100 border-2 border-amber-200 p-6 md:p-8 shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-105">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-amber-300/30 to-yellow-300/30 rounded-full blur-3xl -mr-16 -mt-16"></div>
+            <div className="relative z-10">
+              <div className="w-16 h-16 rounded-full bg-gradient-to-br from-amber-400 to-yellow-500 flex items-center justify-center mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                <Trophy className="w-8 h-8 text-white" />
+              </div>
+              <h4 className="text-xl font-bold text-slate-900 mb-2">Excellence in Education</h4>
+              <p className="text-sm text-slate-700 leading-relaxed">
+                Recognized for outstanding academic performance and student achievement
+              </p>
+              <div className="mt-4 flex items-center gap-1">
+                <Star className="w-4 h-4 fill-amber-400 text-amber-400" />
+                <Star className="w-4 h-4 fill-amber-400 text-amber-400" />
+                <Star className="w-4 h-4 fill-amber-400 text-amber-400" />
+                <Star className="w-4 h-4 fill-amber-400 text-amber-400" />
+                <Star className="w-4 h-4 fill-amber-400 text-amber-400" />
+              </div>
+            </div>
+          </div>
+
+          {/* Award Card 2 */}
+          <div className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-blue-50 via-sky-50 to-blue-100 border-2 border-blue-200 p-6 md:p-8 shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-105">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-blue-300/30 to-sky-300/30 rounded-full blur-3xl -mr-16 -mt-16"></div>
+            <div className="relative z-10">
+              <div className="w-16 h-16 rounded-full bg-gradient-to-br from-blue-500 to-sky-600 flex items-center justify-center mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                <Award className="w-8 h-8 text-white" />
+              </div>
+              <h4 className="text-xl font-bold text-slate-900 mb-2">Best CBSE School</h4>
+              <p className="text-sm text-slate-700 leading-relaxed">
+                Awarded for maintaining highest standards in CBSE curriculum delivery
+              </p>
+              <div className="mt-4 flex items-center gap-1">
+                <Star className="w-4 h-4 fill-blue-400 text-blue-400" />
+                <Star className="w-4 h-4 fill-blue-400 text-blue-400" />
+                <Star className="w-4 h-4 fill-blue-400 text-blue-400" />
+                <Star className="w-4 h-4 fill-blue-400 text-blue-400" />
+                <Star className="w-4 h-4 fill-blue-400 text-blue-400" />
+              </div>
+            </div>
+          </div>
+
+          {/* Award Card 3 */}
+          <div className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-emerald-50 via-green-50 to-emerald-100 border-2 border-emerald-200 p-6 md:p-8 shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-105">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-emerald-300/30 to-green-300/30 rounded-full blur-3xl -mr-16 -mt-16"></div>
+            <div className="relative z-10">
+              <div className="w-16 h-16 rounded-full bg-gradient-to-br from-emerald-500 to-green-600 flex items-center justify-center mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                <Medal className="w-8 h-8 text-white" />
+              </div>
+              <h4 className="text-xl font-bold text-slate-900 mb-2">Social Impact Award</h4>
+              <p className="text-sm text-slate-700 leading-relaxed">
+                Honored for transforming lives of underprivileged children through education
+              </p>
+              <div className="mt-4 flex items-center gap-1">
+                <Star className="w-4 h-4 fill-emerald-400 text-emerald-400" />
+                <Star className="w-4 h-4 fill-emerald-400 text-emerald-400" />
+                <Star className="w-4 h-4 fill-emerald-400 text-emerald-400" />
+                <Star className="w-4 h-4 fill-emerald-400 text-emerald-400" />
+                <Star className="w-4 h-4 fill-emerald-400 text-emerald-400" />
+              </div>
+            </div>
+          </div>
+
+          {/* Award Card 4 */}
+          <div className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-purple-50 via-violet-50 to-purple-100 border-2 border-purple-200 p-6 md:p-8 shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-105">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-purple-300/30 to-violet-300/30 rounded-full blur-3xl -mr-16 -mt-16"></div>
+            <div className="relative z-10">
+              <div className="w-16 h-16 rounded-full bg-gradient-to-br from-purple-500 to-violet-600 flex items-center justify-center mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                <Star className="w-8 h-8 text-white fill-white" />
+              </div>
+              <h4 className="text-xl font-bold text-slate-900 mb-2">Innovation in Teaching</h4>
+              <p className="text-sm text-slate-700 leading-relaxed">
+                Recognized for innovative teaching methods and holistic student development
+              </p>
+              <div className="mt-4 flex items-center gap-1">
+                <Star className="w-4 h-4 fill-purple-400 text-purple-400" />
+                <Star className="w-4 h-4 fill-purple-400 text-purple-400" />
+                <Star className="w-4 h-4 fill-purple-400 text-purple-400" />
+                <Star className="w-4 h-4 fill-purple-400 text-purple-400" />
+                <Star className="w-4 h-4 fill-purple-400 text-purple-400" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+    </section>
+
     {/* Founder Message */}
-    <section className="mx-auto max-w-7xl px-6 pb-20">
-      <div className="rounded-3xl border border-slate-200/80 bg-gradient-to-br from-white via-slate-50/30 to-white p-8 md:p-12 shadow-xl">
-        <div className="grid md:grid-cols-4 gap-1 md:gap-2 items-center">
+    <section className="mx-auto max-w-7xl px-6 pb-12">
+      <div className="group relative rounded-3xl overflow-hidden bg-gradient-to-br from-blue-50 via-white to-sky-50 p-8 md:p-10 lg:p-12 shadow-2xl border border-blue-100/50 transition-all duration-500 hover:from-blue-100 hover:via-blue-50 hover:to-sky-100 hover:shadow-3xl hover:border-blue-200/70 hover:scale-[1.02] active:scale-[1.01]">
+        {/* Decorative background elements */}
+        <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-blue-200/20 to-sky-200/20 rounded-full blur-3xl -mr-48 -mt-48 transition-all duration-500 group-hover:from-blue-300/40 group-hover:to-sky-300/40 group-hover:scale-110"></div>
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-sky-200/20 to-blue-200/20 rounded-full blur-3xl -ml-48 -mb-48 transition-all duration-500 group-hover:from-sky-300/40 group-hover:to-blue-300/40 group-hover:scale-110"></div>
+        
+        <div className="relative z-10 grid md:grid-cols-4 gap-6 md:gap-8 items-center px-4 md:px-6">
           {/* Left Side - Founder Image and Name */}
           <div className="flex flex-col items-center md:items-start md:col-span-1">
-            <div className="relative w-48 h-48 md:w-56 md:h-56 rounded-full overflow-hidden border-4 border-sky-400 shadow-2xl ring-4 ring-sky-100 mb-6">
-              <img
-                src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=400&auto=format&fit=crop"
-                alt="Founder"
-                className="w-full h-full object-cover"
-              />
+            <div className="relative group mb-4">
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-400 to-sky-500 rounded-full blur-xl opacity-30 group-hover:opacity-50 transition-opacity duration-300"></div>
+              <div className="relative w-40 h-40 md:w-48 md:h-48 rounded-full overflow-hidden shadow-2xl ring-2 ring-white/50 group-hover:scale-105 transition-transform duration-300">
+                <img
+                  src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=400&auto=format&fit=crop"
+                  alt="Founder"
+                  className="w-full h-full object-cover"
+                />
+              </div>
             </div>
             <div className="text-center md:text-left">
-              <h3 className="text-2xl md:text-3xl font-bold text-slate-900 mb-2">Founder Name</h3>
-              <p className="text-lg md:text-xl text-sky-600 font-semibold">Founder & Director</p>
+              <h3 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent mb-2 transition-all duration-500 group-hover:from-blue-900 group-hover:to-slate-800">
+                Founder Name
+              </h3>
+              <p className="text-lg md:text-xl bg-gradient-to-r from-blue-600 to-sky-600 bg-clip-text text-transparent font-semibold transition-all duration-500 group-hover:from-blue-700 group-hover:to-sky-700">
+                Founder & Director
+              </p>
             </div>
           </div>
 
           {/* Right Side - Founder Message */}
-          <div className="relative pl-0 md:pl-0 md:col-span-3">
-            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 bg-clip-text text-transparent mb-6 text-center md:text-left">
-              Message from the Founder
-            </h2>
-            <div className="absolute -top-4 -left-2 md:-left-4 text-6xl text-sky-200/50 font-serif">"</div>
-            <p className="text-slate-700 text-base md:text-lg lg:text-xl leading-relaxed relative z-10 italic font-medium pl-4 md:pl-0">
-              Education is the most powerful weapon which you can use to change the world. At Heal Paradise 
-              School, we believe that every child deserves access to quality education, regardless of their 
-              circumstances. Our mission is to break barriers and create opportunities for those who need it most. 
-              Through compassion, dedication, and excellence, we are building a future where every child can dream, 
-              achieve, and inspire.
-            </p>
-            <div className="absolute -bottom-4 -right-4 text-6xl text-sky-200/50 font-serif">"</div>
+          <div className="relative pl-0 md:pl-8 md:col-span-3">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="h-1 w-12 bg-gradient-to-r from-blue-500 to-sky-500 rounded-full transition-all duration-500 group-hover:w-16 group-hover:from-blue-600 group-hover:to-sky-600"></div>
+              <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold">
+                <span className="text-slate-900">Message from the </span>
+                <span className="text-blue-600">Founder</span>
+              </h2>
+            </div>
+            <div className="relative">
+              <div className="absolute -top-6 -left-4 text-7xl md:text-8xl text-blue-200/40 font-serif leading-none">"</div>
+              <p className="text-slate-700 text-base md:text-lg lg:text-xl leading-relaxed relative z-10 font-medium pl-6 md:pl-8">
+                Education is the most powerful weapon which you can use to change the world. At Heal Paradise 
+                School, we believe that every child deserves access to quality education, regardless of their 
+                circumstances. Our mission is to break barriers and create opportunities for those who need it most. 
+                Through compassion, dedication, and excellence, we are building a future where every child can dream, 
+                achieve, and inspire.
+              </p>
+              <div className="absolute -bottom-4 -right-4 text-7xl md:text-8xl text-blue-200/40 font-serif leading-none">"</div>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
     {/* Team/Leadership Carousel */}
-    <section className="mx-auto max-w-7xl px-6 pb-20">
-      <div className="text-center mb-12">
-        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 bg-clip-text text-transparent mb-4">
+    <section className="mx-auto max-w-7xl px-6 pb-12">
+      <div className="text-center mb-8">
+        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 bg-clip-text text-transparent mb-3">
           Our Leadership Team
         </h2>
         <p className="text-slate-600 text-lg max-w-2xl mx-auto">
@@ -307,36 +480,34 @@ const LandingPage = () => {
         </p>
       </div>
       
-      <CardCarousel 
-        members={[
+      <TeamTestimonials 
+        testimonials={[
           {
-            id: 1,
             name: "Dr. John Smith",
             designation: "Principal",
-            image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=400&auto=format&fit=crop",
-            details: "With over 20 years of experience in education, Dr. Smith leads our academic excellence initiatives."
+            src: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=400&auto=format&fit=crop",
+            quote: "With over 20 years of experience in education, Dr. Smith leads our academic excellence initiatives."
           },
           {
-            id: 2,
             name: "Ms. Sarah Johnson",
             designation: "Vice Principal",
-            image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=400&auto=format&fit=crop",
-            details: "Passionate about student welfare and holistic development, Ms. Johnson ensures every child receives personalized attention."
+            src: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=400&auto=format&fit=crop",
+            quote: "Passionate about student welfare and holistic development, Ms. Johnson ensures every child receives personalized attention."
           },
           {
-            id: 3,
             name: "Mr. David Williams",
             designation: "Head of Academics",
-            image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=400&auto=format&fit=crop",
-            details: "An expert in curriculum development, Mr. Williams designs innovative learning programs for our students."
+            src: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=400&auto=format&fit=crop",
+            quote: "An expert in curriculum development, Mr. Williams designs innovative learning programs for our students."
           }
         ]}
+        autoplay={true}
       />
     </section>
 
  
   {/* Mission */}
-    <section id="mission" className="mx-auto max-w-7xl px-6 py-16">
+    <section id="mission" className="mx-auto max-w-7xl px-6 py-12">
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
         <SpotlightCard
           className="rounded-2xl border border-white/60 bg-neutral-200/40 backdrop-blur p-6"
@@ -377,45 +548,10 @@ const LandingPage = () => {
       </div>
     </section>
 
-    {/* Programs */}
-    <section className="mx-auto max-w-7xl px-6 pb-20">
-      <div className="grid gap-8 lg:grid-cols-2">
-        <div className="group overflow-hidden rounded-3xl border border-slate-200/80 bg-gradient-to-br from-white to-slate-50/50 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-[1.02]">
-          <div className="aspect-[16/9] overflow-hidden">
-            <img
-              src="https://images.unsplash.com/photo-1523580846011-d3a5bc25702b?q=80&w=1600&auto=format&fit=crop"
-              alt="STEM Labs"
-              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
-            />
-          </div>
-          <div className="p-6 md:p-8">
-            <h3 className="text-2xl md:text-3xl font-bold text-slate-900 mb-3">STEM & Innovation</h3>
-            <p className="text-base md:text-lg text-slate-700 leading-relaxed">
-              Modern science labs, coding clubs, and hands‑on projects build curiosity and
-              problem‑solving skills.
-            </p>
-          </div>
-        </div>
-        <div className="group overflow-hidden rounded-3xl border border-slate-200/80 bg-gradient-to-br from-white to-slate-50/50 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-[1.02]">
-          <div className="aspect-[16/9] overflow-hidden">
-            <img
-              src="https://images.unsplash.com/photo-1541348263662-e068662d82af?q=80&w=1600&auto=format&fit=crop"
-              alt="Residential Care"
-              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
-            />
-          </div>
-          <div className="p-6 md:p-8">
-            <h3 className="text-2xl md:text-3xl font-bold text-slate-900 mb-3">Residential Care</h3>
-            <p className="text-base md:text-lg text-slate-700 leading-relaxed">
-              Safe hostels, dedicated mentors, and balanced routines ensure comfort and growth.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
+  
 
     {/* Call To Action */}
-    <section id="admissions" className="mx-auto max-w-7xl px-6 pb-24">
+    <section id="admissions" className="mx-auto max-w-7xl px-6 pb-12">
       <div className="relative overflow-hidden rounded-3xl border border-slate-200/80 bg-gradient-to-br from-slate-50 via-white to-blue-50/30 p-8 md:p-12 shadow-2xl">
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
           <div className="absolute -right-20 -top-20 h-72 w-72 rounded-full bg-gradient-to-br from-blue-200/40 to-sky-200/40 blur-3xl animate-pulse" />
@@ -445,10 +581,8 @@ const LandingPage = () => {
           </div>
         </div>
       </div>
+      
     </section>
-    
-    {/* Footer */}
-    <Footer />
     </>
   )
 }

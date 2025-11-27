@@ -54,7 +54,7 @@ function AppleNavbar() {
   const mobileMenuRef = useRef(null);
   const [indicatorStyle, setIndicatorStyle] = useState({ left: 0, width: 0, height: 0, opacity: 0 });
 
-  // Handle logo click - reload landing page
+  // Handle logo click - navigate to landing page
   const handleLogoClick = (e) => {
     e.preventDefault();
     setActiveNav(null);
@@ -62,13 +62,8 @@ function AppleNavbar() {
     setOpenSubmenu(null);
     setIsMobileMenuOpen(false);
     
-    // If already on landing page, reload it
-    if (location.pathname === "/") {
-      window.location.reload();
-    } else {
-      // Navigate to landing page
-      navigate("/");
-    }
+    // Navigate to landing page
+    navigate("/");
   };
 
   useEffect(() => {

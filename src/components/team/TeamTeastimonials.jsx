@@ -1,7 +1,7 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState, useRef, useCallback } from "react";
-import { cn } from "../lib/utils";
+import { cn } from "../../lib/utils";
 
 // Calculate gap based on container width (from circular testimonials)
 function calculateGap(width) {

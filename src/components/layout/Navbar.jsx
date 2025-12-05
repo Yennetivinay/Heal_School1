@@ -54,20 +54,69 @@ function AppleNavbar() {
   const mobileMenuRef = useRef(null);
   const [indicatorStyle, setIndicatorStyle] = useState({ left: 0, width: 0, height: 0, opacity: 0 });
 
-  // Handle logo click - navigate to landing page
+  // Handle logo click - navigate to landing page or scroll to top if already there
   const handleLogoClick = (e) => {
     e.preventDefault();
+    e.stopPropagation();
+    
     setActiveNav(null);
     setHoveredItem(null);
     setOpenSubmenu(null);
     setIsMobileMenuOpen(false);
     
-    // Navigate to landing page
-    navigate("/");
+    // If already on landing page, scroll to top
+    if (location.pathname === "/") {
+      // Use requestAnimationFrame to ensure DOM is ready
+      requestAnimationFrame(() => {
+        // Method 1: Try Lenis if available (it controls smooth scrolling)
+        if (window.lenis && typeof window.lenis.scrollTo === 'function') {
+          try {
+            window.lenis.scrollTo(0, {
+              duration: 1.5,
+              easing: (t) => 1 - Math.pow(1 - t, 3),
+              immediate: false
+            });
+          } catch (err) {
+            // Fallback if Lenis fails
+            window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+          }
+        } else {
+          // Method 2: Native smooth scroll if Lenis not available
+          window.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: 'smooth'
+          });
+        }
+        
+        // Method 3: Direct scroll as immediate backup
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
+      });
+      
+      // Additional backup after a delay
+      setTimeout(() => {
+        if (window.scrollY > 0) {
+          document.documentElement.scrollTop = 0;
+          document.body.scrollTop = 0;
+          if (window.scrollTo) {
+            window.scrollTo(0, 0);
+          }
+        }
+      }, 100);
+    } else {
+      // Navigate to landing page (ScrollToTop component will handle scrolling)
+      navigate("/");
+    }
   };
 
   useEffect(() => {
     const handleScroll = () => {
+      // Don't process scroll events when modal is open
+      if (document.body.hasAttribute('data-modal-open')) {
+        return;
+      }
+      
       const currentScrollY = window.scrollY;
 
       if (currentScrollY > lastScrollY && currentScrollY > 100) {
@@ -90,6 +139,39 @@ function AppleNavbar() {
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
+  }, [lastScrollY]);
+
+  // Hide navbar when modal is open, restore when modal closes
+  useEffect(() => {
+    const checkModalState = () => {
+      if (document.body.hasAttribute('data-modal-open')) {
+        // Hide navbar when modal opens
+        setIsVisible(false);
+        setIsMobileMenuOpen(false);
+      } else {
+        // Restore navbar visibility based on scroll position when modal closes
+        const currentScrollY = window.scrollY;
+        if (currentScrollY < 10) {
+          setIsVisible(true);
+        } else if (currentScrollY > lastScrollY && currentScrollY > 100) {
+          setIsVisible(false);
+        } else {
+          setIsVisible(true);
+        }
+      }
+    };
+
+    // Check immediately
+    checkModalState();
+
+    // Watch for changes to modal state
+    const observer = new MutationObserver(checkModalState);
+    observer.observe(document.body, {
+      attributes: true,
+      attributeFilter: ['data-modal-open']
+    });
+
+    return () => observer.disconnect();
   }, [lastScrollY]);
 
   // Close mobile menu when clicking outside
@@ -193,7 +275,49 @@ function AppleNavbar() {
   }, [isItemActive]);
 
   // Handle navigation click - Safari-compatible
-  const handleNavClick = (id, closeMobileMenu = true) => {
+  const handleNavClick = (id, closeMobileMenu = true, targetPath = null) => {
+    // If clicking the same page link, scroll to top
+    if (targetPath && location.pathname === targetPath) {
+      // Use requestAnimationFrame to ensure DOM is ready
+      requestAnimationFrame(() => {
+        // Method 1: Try Lenis if available
+        if (window.lenis && typeof window.lenis.scrollTo === 'function') {
+          try {
+            window.lenis.scrollTo(0, {
+              duration: 1.5,
+              easing: (t) => 1 - Math.pow(1 - t, 3),
+              immediate: false
+            });
+          } catch (err) {
+            // Fallback if Lenis fails
+            window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+          }
+        } else {
+          // Method 2: Native smooth scroll if Lenis not available
+          window.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: 'smooth'
+          });
+        }
+        
+        // Method 3: Direct scroll as immediate backup
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
+      });
+      
+      // Additional backup after a delay
+      setTimeout(() => {
+        if (window.scrollY > 0) {
+          document.documentElement.scrollTop = 0;
+          document.body.scrollTop = 0;
+          if (window.scrollTo) {
+            window.scrollTo(0, 0);
+          }
+        }
+      }, 100);
+    }
+    
     // Update all states immediately in one batch
     setActiveNav(id);
     setHoveredItem(null);
@@ -264,7 +388,9 @@ function AppleNavbar() {
           <a 
             href="/"
             onClick={handleLogoClick}
-            className="bg-white w-10 h-10 rounded-full mr-5  border border-black/20 flex items-center justify-center cursor-pointer"
+            className="bg-white w-10 h-10 rounded-full mr-5 border border-black/20 flex items-center justify-center cursor-pointer hover:bg-slate-50 transition-colors"
+            role="button"
+            aria-label="Go to home page"
           >
             <img
               src="/logo.png"
@@ -299,7 +425,7 @@ function AppleNavbar() {
                 {item.to && !item.subItems ? (
                   <Link
                     to={item.to}
-                    onClick={() => handleNavClick(item.id)}
+                    onClick={() => handleNavClick(item.id, true, item.to)}
                     ref={(el) => (itemRefs.current[item.id] = el)}
                     className={`relative z-10 group px-3 xl:px-4 py-2 mx-0.5 rounded-full text-xs xl:text-sm font-medium whitespace-nowrap flex items-center gap-1 transition-colors duration-150 ${
                       isItemActive(item)
@@ -311,7 +437,7 @@ function AppleNavbar() {
                   </Link>
                 ) : (
                   <button
-                    onClick={() => !item.subItems && handleNavClick(item.id)}
+                    onClick={() => !item.subItems && handleNavClick(item.id, true, item.to || null)}
                     ref={(el) => (itemRefs.current[item.id] = el)}
                     className={`relative z-10 group px-3 xl:px-4 py-2 mx-0.5 rounded-full text-xs xl:text-sm font-medium whitespace-nowrap flex items-center gap-1 transition-colors duration-150 ${
                       isItemActive(item)
@@ -345,7 +471,7 @@ function AppleNavbar() {
                             to={subItem.to}
                             key={subItem.id}
                             onClick={() => {
-                              handleNavClick(subItem.id);
+                              handleNavClick(subItem.id, true, subItem.to);
                               setHoveredItem(null);
                             }}
                             className={`block w-full text-left px-4 py-2 text-sm rounded-full transition-colors duration-200 whitespace-nowrap ${
@@ -502,7 +628,7 @@ function AppleNavbar() {
                 <Link
                   to={item.to}
                   onClick={(e) => {
-                    handleNavClick(item.id);
+                    handleNavClick(item.id, true, item.to);
                     // Allow navigation to proceed
                   }}
                   className={`block w-full text-left text-sm font-medium transition-all duration-300 whitespace-normal break-words ${
@@ -522,7 +648,7 @@ function AppleNavbar() {
                   : "hover:bg-blue-50"
               }`}>
                 <button
-                  onClick={() => handleNavClick(item.id)}
+                  onClick={() => handleNavClick(item.id, true, item.to)}
                   className={`block w-full text-left text-sm font-medium transition-all duration-300 ${
                     activeNav === item.id
                       ? "text-white"

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { X, ChevronLeft, ChevronRight, ZoomIn } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -6,6 +6,10 @@ export default function Gallery({ images = [] }) {
   const [selectedImage, setSelectedImage] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [carouselIndex, setCarouselIndex] = useState(0);
+  const [imagesLoaded, setImagesLoaded] = useState(new Set());
+  const [touchStart, setTouchStart] = useState(null);
+  const [touchEnd, setTouchEnd] = useState(null);
+  const autoPlayTimerRef = useRef(null);
 
   const openLightbox = (index) => {
     setCurrentIndex(index);
@@ -160,6 +164,17 @@ export default function Gallery({ images = [] }) {
           },
         ];
 
+  // Preload images to prevent white screen during transitions
+  useEffect(() => {
+    displayImages.forEach((image, index) => {
+      const img = new Image();
+      img.src = image.url;
+      img.onload = () => {
+        setImagesLoaded(prev => new Set([...prev, index]));
+      };
+    });
+  }, []);
+
   const nextCarousel = () => {
     setCarouselIndex((prev) => (prev + 1) % displayImages.length);
   };
@@ -168,32 +183,122 @@ export default function Gallery({ images = [] }) {
     setCarouselIndex((prev) => (prev - 1 + displayImages.length) % displayImages.length);
   };
 
+  // Auto-play carousel - defined after displayImages
+  useEffect(() => {
+    // Clear any existing timer
+    if (autoPlayTimerRef.current) {
+      clearInterval(autoPlayTimerRef.current);
+    }
+
+    const imageCount = displayImages.length;
+    if (imageCount === 0) return;
+
+    // Set up auto-play (change image every 4 seconds)
+    autoPlayTimerRef.current = setInterval(() => {
+      setCarouselIndex((prev) => (prev + 1) % imageCount);
+    }, 4000);
+
+    // Cleanup on unmount
+    return () => {
+      if (autoPlayTimerRef.current) {
+        clearInterval(autoPlayTimerRef.current);
+      }
+    };
+  }, [displayImages]);
+
+  // Touch/swipe handlers
+  const minSwipeDistance = 50;
+
+  const onTouchStart = (e) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const onTouchMove = (e) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+
+    if (isLeftSwipe) {
+      nextCarousel();
+    }
+    if (isRightSwipe) {
+      prevCarousel();
+    }
+
+    // Reset touch values
+    setTouchStart(null);
+    setTouchEnd(null);
+
+    // Reset auto-play timer after manual swipe
+    if (autoPlayTimerRef.current) {
+      clearInterval(autoPlayTimerRef.current);
+    }
+    autoPlayTimerRef.current = setInterval(() => {
+      setCarouselIndex((prev) => (prev + 1) % displayImages.length);
+    }, 4000);
+  };
+
   return (
     <div className="w-full">
       {/* Mobile Carousel */}
       <div className="md:hidden w-full">
-        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-slate-50 to-slate-100 border border-slate-200/50 shadow-xl">
-          <div className="relative h-[300px]">
-            <AnimatePresence mode="wait">
+        <div className="relative overflow-hidden rounded-2xl border border-slate-200/50 shadow-xl" style={{ backgroundColor: '#f1f5f9' }}>
+          <div 
+            className="relative h-[300px] overflow-hidden"
+            onTouchStart={onTouchStart}
+            onTouchMove={onTouchMove}
+            onTouchEnd={onTouchEnd}
+            style={{ backgroundColor: '#f1f5f9' }}
+          >
+            <AnimatePresence mode="popLayout" initial={false}>
               <motion.div
                 key={carouselIndex}
-                initial={{ opacity: 0, x: 100 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -100 }}
-                transition={{ duration: 0.3 }}
-                className="absolute inset-0"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ 
+                  duration: 0.6, 
+                  ease: [0.4, 0, 0.2, 1],
+                  opacity: { duration: 0.5 }
+                }}
+                className="absolute inset-0 w-full h-full"
+                style={{ 
+                  willChange: 'opacity',
+                  backgroundColor: '#f1f5f9'
+                }}
               >
                 <div 
                   className="relative w-full h-full overflow-hidden cursor-pointer"
                   onClick={() => openLightbox(carouselIndex)}
+                  style={{ backgroundColor: '#f1f5f9' }}
                 >
                   <img
                     src={displayImages[carouselIndex].url}
                     alt={displayImages[carouselIndex].title || `Gallery image ${carouselIndex + 1}`}
-                    className="w-full h-full object-cover"
+                    className="absolute inset-0 w-full h-full object-cover"
+                    loading="eager"
+                    style={{
+                      opacity: imagesLoaded.has(carouselIndex) ? 1 : 0.7,
+                      transition: 'opacity 0.5s ease-out',
+                      objectPosition: 'center center',
+                      minWidth: '100%',
+                      minHeight: '100%',
+                      width: '100%',
+                      height: '100%'
+                    }}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent">
-                    <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
+                  {!imagesLoaded.has(carouselIndex) && (
+                    <div className="absolute inset-0 bg-gradient-to-br from-slate-200 via-slate-100 to-slate-200 animate-pulse pointer-events-none" />
+                  )}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent">
+                    <div className="absolute bottom-16 left-0 right-0 p-4 text-white">
                       {displayImages[carouselIndex].title && (
                         <h3 className="text-lg font-bold mb-1">{displayImages[carouselIndex].title}</h3>
                       )}
@@ -216,22 +321,8 @@ export default function Gallery({ images = [] }) {
               </motion.div>
             </AnimatePresence>
             
-            {/* Navigation Buttons */}
-            <button
-              onClick={prevCarousel}
-              className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white hover:scale-110 transition-all duration-300 z-10 shadow-lg"
-            >
-              <ChevronLeft className="w-5 h-5 text-slate-800" />
-            </button>
-            <button
-              onClick={nextCarousel}
-              className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white hover:scale-110 transition-all duration-300 z-10 shadow-lg"
-            >
-              <ChevronRight className="w-5 h-5 text-slate-800" />
-            </button>
-            
             {/* Dots Indicator */}
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-20">
               {displayImages.map((_, index) => (
                 <button
                   key={index}
@@ -247,7 +338,7 @@ export default function Gallery({ images = [] }) {
       </div>
 
       {/* Desktop Gallery Grid - Layout Matching Sketch */}
-      <div className="hidden md:block w-full max-w-7xl mx-auto p-4 bg-gradient-to-br from-slate-50 to-slate-100 rounded-3xl border border-slate-200/50 shadow-xl">
+      <div className="hidden md:block w-full max-w-7xl mx-auto p-4 bg-gradient-to-br from-slate-100 via-slate-50 to-slate-100 rounded-3xl border border-slate-200/50 shadow-xl">
         <div className="grid grid-cols-4 gap-3" style={{ gridTemplateRows: '300px auto 300px', gridAutoRows: 'minmax(120px, auto)' }}>
           {displayImages.slice(0, 10).map((image, index) => {
             // Layout pattern matching the sketch:

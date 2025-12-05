@@ -35,10 +35,10 @@ const App = () => {
     const preloadPages = () => {
       // Preload all pages in parallel for instant navigation
       const preloadPromises = [
-        import('./pages/AboutPage'),
-        import('./pages/LandingPage'),
-        import('./pages/AwardsPage'),
-        import('./pages/GalleryPage'),
+        import('./Pages/AboutPage'),
+        import('./Pages/LandingPage'),
+        import('./Pages/AwardsPage'),
+        import('./Pages/GalleryPage'),
       ];
       
       // Preload without blocking - use Promise.allSettled to not fail if one fails

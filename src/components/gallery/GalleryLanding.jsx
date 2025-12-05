@@ -1,109 +1,12 @@
 import { useState, useEffect, useRef } from "react";
-import { X, ChevronLeft, ChevronRight, ZoomIn } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function Gallery({ images = [] }) {
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [currentIndex, setCurrentIndex] = useState(0);
   const [carouselIndex, setCarouselIndex] = useState(0);
   const [imagesLoaded, setImagesLoaded] = useState(new Set());
   const [touchStart, setTouchStart] = useState(null);
   const [touchEnd, setTouchEnd] = useState(null);
   const autoPlayTimerRef = useRef(null);
-
-  const openLightbox = (index) => {
-    setCurrentIndex(index);
-    const displayImages = images.length > 0 ? images : [
-      {
-        url: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80",
-        title: "Mountain Landscape",
-        description: "Beautiful mountain view",
-      },
-      {
-        url: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=800&q=80",
-        title: "Forest Path",
-        description: "Serene forest trail",
-      },
-      {
-        url: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=800&q=80",
-        title: "Lake View",
-        description: "Peaceful lake scenery",
-      },
-      {
-        url: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=800&q=80",
-        title: "Sunset",
-        description: "Golden hour beauty",
-      },
-      {
-        url: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&q=80",
-        title: "Nature Trail",
-        description: "Hiking adventure",
-      },
-      {
-        url: "https://images.unsplash.com/photo-1426604966848-d7adac402bff?w=800&q=80",
-        title: "Wilderness",
-        description: "Wild and free",
-      },
-      {
-        url: "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=800&q=80",
-        title: "Mountain Peak",
-        description: "Reaching new heights",
-      },
-      {
-        url: "https://images.unsplash.com/photo-1475924156734-496f6cac6ec1?w=800&q=80",
-        title: "Ocean Waves",
-        description: "Coastal beauty",
-      },
-      {
-        url: "https://images.unsplash.com/photo-1518173946687-a4c8892bbd9f?w=800&q=80",
-        title: "Desert Dunes",
-        description: "Sandy landscapes",
-      },
-    ];
-    setSelectedImage(displayImages[index]);
-  };
-
-  const closeLightbox = () => {
-    setSelectedImage(null);
-  };
-
-  const goToPrevious = (e) => {
-    e.stopPropagation();
-    const totalImages = images.length > 0 ? images.length : 9;
-    const newIndex = currentIndex === 0 ? totalImages - 1 : currentIndex - 1;
-    setCurrentIndex(newIndex);
-    const displayImages = images.length > 0 ? images : [
-      { url: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80", title: "Mountain Landscape", description: "Beautiful mountain view" },
-      { url: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=800&q=80", title: "Forest Path", description: "Serene forest trail" },
-      { url: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=800&q=80", title: "Lake View", description: "Peaceful lake scenery" },
-      { url: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=800&q=80", title: "Sunset", description: "Golden hour beauty" },
-      { url: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&q=80", title: "Nature Trail", description: "Hiking adventure" },
-      { url: "https://images.unsplash.com/photo-1426604966848-d7adac402bff?w=800&q=80", title: "Wilderness", description: "Wild and free" },
-      { url: "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=800&q=80", title: "Mountain Peak", description: "Reaching new heights" },
-      { url: "https://images.unsplash.com/photo-1475924156734-496f6cac6ec1?w=800&q=80", title: "Ocean Waves", description: "Coastal beauty" },
-      { url: "https://images.unsplash.com/photo-1518173946687-a4c8892bbd9f?w=800&q=80", title: "Desert Dunes", description: "Sandy landscapes" },
-    ];
-    setSelectedImage(displayImages[newIndex]);
-  };
-
-  const goToNext = (e) => {
-    e.stopPropagation();
-    const totalImages = images.length > 0 ? images.length : 9;
-    const newIndex = currentIndex === totalImages - 1 ? 0 : currentIndex + 1;
-    setCurrentIndex(newIndex);
-    const displayImages = images.length > 0 ? images : [
-      { url: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80", title: "Mountain Landscape", description: "Beautiful mountain view" },
-      { url: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=800&q=80", title: "Forest Path", description: "Serene forest trail" },
-      { url: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=800&q=80", title: "Lake View", description: "Peaceful lake scenery" },
-      { url: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=800&q=80", title: "Sunset", description: "Golden hour beauty" },
-      { url: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&q=80", title: "Nature Trail", description: "Hiking adventure" },
-      { url: "https://images.unsplash.com/photo-1426604966848-d7adac402bff?w=800&q=80", title: "Wilderness", description: "Wild and free" },
-      { url: "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=800&q=80", title: "Mountain Peak", description: "Reaching new heights" },
-      { url: "https://images.unsplash.com/photo-1475924156734-496f6cac6ec1?w=800&q=80", title: "Ocean Waves", description: "Coastal beauty" },
-      { url: "https://images.unsplash.com/photo-1518173946687-a4c8892bbd9f?w=800&q=80", title: "Desert Dunes", description: "Sandy landscapes" },
-    ];
-    setSelectedImage(displayImages[newIndex]);
-  };
 
   // Default sample images if none provided
   const displayImages =
@@ -275,8 +178,7 @@ export default function Gallery({ images = [] }) {
                 }}
               >
                 <div 
-                  className="relative w-full h-full overflow-hidden cursor-pointer"
-                  onClick={() => openLightbox(carouselIndex)}
+                  className="relative w-full h-full overflow-hidden"
                   style={{ backgroundColor: '#f1f5f9' }}
                 >
                   <img
@@ -298,7 +200,7 @@ export default function Gallery({ images = [] }) {
                     <div className="absolute inset-0 bg-gradient-to-br from-slate-200 via-slate-100 to-slate-200 animate-pulse pointer-events-none" />
                   )}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent">
-                    <div className="absolute bottom-7 left-0 right-0 p-4 text-white">
+                    <div className="absolute bottom-8 left-0 right-0 p-4 text-white">
                       {displayImages[carouselIndex].title && (
                         <h3 className="text-lg font-bold mb-1">{displayImages[carouselIndex].title}</h3>
                       )}
@@ -306,16 +208,6 @@ export default function Gallery({ images = [] }) {
                         <p className="text-sm text-white/90">{displayImages[carouselIndex].description}</p>
                       )}
                     </div>
-                  </div>
-                  {/* Zoom Icon */}
-                  <div 
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      openLightbox(carouselIndex);
-                    }}
-                    className="absolute top-4 right-4 w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center cursor-pointer hover:bg-white hover:scale-110 transition-all duration-300 z-10"
-                  >
-                    <ZoomIn className="w-5 h-5 text-slate-800" />
                   </div>
                 </div>
               </motion.div>
@@ -367,33 +259,21 @@ export default function Gallery({ images = [] }) {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="group relative overflow-hidden rounded-lg cursor-pointer bg-gradient-to-br from-slate-100 to-slate-200 shadow-md hover:shadow-xl transition-all duration-500 hover:scale-[1.03]"
+                className="group relative overflow-hidden rounded-lg bg-gradient-to-br from-slate-100 to-slate-200 shadow-md hover:shadow-xl transition-all duration-500 hover:scale-[1.03]"
                 style={getImageStyle()}
               >
             {/* Image */}
             <div 
               className="relative w-full h-full overflow-hidden"
-              onClick={() => openLightbox(index)}
             >
               <img
                 src={image.url}
                 alt={image.title || `Gallery image ${index + 1}`}
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 cursor-pointer"
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
               />
               
               {/* Gradient Overlay */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              
-              {/* Zoom Icon */}
-              <div 
-                onClick={(e) => {
-                  e.stopPropagation();
-                  openLightbox(index);
-                }}
-                className="absolute top-4 right-4 w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transform scale-75 group-hover:scale-100 transition-all duration-300 cursor-pointer hover:bg-white hover:scale-110 z-10"
-              >
-                <ZoomIn className="w-5 h-5 text-slate-800" />
-              </div>
               
               {/* Content Overlay */}
               <div className="absolute bottom-0 left-0 right-0 p-6 transform translate-y-full group-hover:translate-y-0 transition-transform duration-500">
@@ -414,72 +294,6 @@ export default function Gallery({ images = [] }) {
         </div>
       </div>
 
-      {/* Lightbox - Minimal Design */}
-      <AnimatePresence>
-        {selectedImage && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4"
-            onClick={closeLightbox}
-          >
-            {/* Close Button - Minimal */}
-            <motion.button
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.1 }}
-              onClick={closeLightbox}
-              className="absolute top-4 right-4 w-10 h-10 flex items-center justify-center text-white hover:text-white/70 transition-colors z-10"
-            >
-              <X size={24} />
-            </motion.button>
-
-            {/* Previous Button - Minimal */}
-            <motion.button
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.1 }}
-              onClick={goToPrevious}
-              className="absolute left-4 w-10 h-10 flex items-center justify-center text-white hover:text-white/70 transition-colors z-10"
-            >
-              <ChevronLeft size={24} />
-            </motion.button>
-
-            {/* Next Button - Minimal */}
-            <motion.button
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.1 }}
-              onClick={goToNext}
-              className="absolute right-4 w-10 h-10 flex items-center justify-center text-white hover:text-white/70 transition-colors z-10"
-            >
-              <ChevronRight size={24} />
-            </motion.button>
-
-            {/* Image - Minimal */}
-            <motion.div
-              initial={{ scale: 0.95, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.95, opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              className="max-w-5xl max-h-[90vh] flex items-center justify-center"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <motion.img
-                key={currentIndex}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.2 }}
-                src={selectedImage.url}
-                alt={selectedImage.title || "Gallery image"}
-                className="max-w-full max-h-[90vh] object-contain"
-              />
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </div>
   );
 }

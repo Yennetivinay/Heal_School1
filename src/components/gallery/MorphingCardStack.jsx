@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { motion, AnimatePresence, LayoutGroup } from "framer-motion"
 import { cn } from "../../lib/utils"
 import { Grid3X3, Layers, LayoutList } from "lucide-react"
@@ -21,6 +21,33 @@ export function MorphingCardStack({
   const [expandedCard, setExpandedCard] = useState(null)
   const [activeIndex, setActiveIndex] = useState(0)
   const [isDragging, setIsDragging] = useState(false)
+  const [loadedImages, setLoadedImages] = useState(new Set())
+
+  // Preload first few images
+  useEffect(() => {
+    if (!cards || cards.length === 0) return
+    
+    const preloadImages = cards.slice(0, 3).map(card => {
+      if (card?.image) {
+        const img = new Image()
+        img.src = card.image
+        img.onload = () => {
+          setLoadedImages(prev => new Set([...prev, card.image]))
+        }
+        return img
+      }
+      return null
+    }).filter(Boolean)
+    
+    return () => {
+      // Cleanup if needed
+      preloadImages.forEach(img => {
+        if (img && img.src) {
+          img.src = ''
+        }
+      })
+    }
+  }, [cards])
 
   if (!cards || cards.length === 0) {
     return (
@@ -165,10 +192,23 @@ export function MorphingCardStack({
                 >
                   {card.image && (
                     <div className="absolute inset-0 -z-10">
+                      {/* Placeholder gradient */}
+                      {!loadedImages.has(card.image) && (
+                        <div className="absolute inset-0 bg-gradient-to-br from-blue-600/20 via-sky-500/20 to-blue-600/20 animate-pulse" />
+                      )}
+                      {/* Actual image */}
                       <img
                         src={card.image}
                         alt={card.title}
-                        className="w-full h-full object-cover opacity-30"
+                        className={cn(
+                          "w-full h-full object-cover opacity-30 transition-opacity duration-300",
+                          loadedImages.has(card.image) ? "opacity-30" : "opacity-0"
+                        )}
+                        loading={card.stackPosition === 0 ? "eager" : "lazy"}
+                        decoding="async"
+                        onLoad={() => {
+                          setLoadedImages(prev => new Set([...prev, card.image]))
+                        }}
                       />
                       <div className="absolute inset-0 bg-gradient-to-br from-slate-900/80 to-slate-800/80" />
                     </div>

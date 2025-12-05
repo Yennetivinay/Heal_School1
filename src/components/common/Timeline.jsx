@@ -179,138 +179,131 @@ export const Timeline = ({ data }) => {
                 {/* Content Card - Right Side */}
                 <motion.div
                   animate={{
-                    scale: isActive ? 1.01 : 1,
+                    scale: isActive ? 1.02 : 1,
+                    y: isActive ? -2 : 0,
                   }}
-                  transition={{ duration: 0.3 }}
+                  transition={{ duration: 0.3, ease: "easeOut" }}
                   className="flex-1 w-full"
                 >
                   <div className={`
-                    relative group rounded-lg sm:rounded-xl md:rounded-2xl lg:rounded-3xl border-2 overflow-hidden transition-all duration-500
+                    relative group rounded-2xl sm:rounded-3xl overflow-hidden transition-all duration-500 flex flex-col md:flex-row
                     ${isActive 
-                      ? 'bg-gradient-to-br from-white via-blue-50/30 to-sky-50/30 border-blue-300 shadow-xl sm:shadow-2xl shadow-blue-500/20 ring-2 ring-blue-200/50' 
+                      ? 'bg-white shadow-2xl ring-4 ring-blue-500/20 border-2 border-blue-300/50' 
                       : isPast
-                      ? 'bg-gradient-to-br from-white to-slate-50 border-blue-200 shadow-lg sm:shadow-xl ring-1 ring-blue-100/30'
-                      : 'bg-white border-slate-200 shadow-md sm:shadow-lg hover:shadow-xl hover:ring-1 hover:ring-blue-100/40'
+                      ? 'bg-white shadow-xl ring-2 ring-blue-200/30 border-2 border-blue-200/40'
+                      : 'bg-white shadow-lg border-2 border-slate-200/60 hover:shadow-xl hover:ring-2 hover:ring-blue-100/40'
                     }
                   `}>
-                    {/* Animated gradient overlay with elegant shimmer */}
+                    {/* Animated background gradient */}
                     <motion.div 
-                      className="absolute inset-0 bg-gradient-to-br from-blue-500/0 via-sky-500/0 to-blue-500/0 opacity-0 group-hover:opacity-10 transition-opacity duration-500"
+                      className={`absolute inset-0 z-0 ${
+                        isActive 
+                          ? 'bg-gradient-to-br from-blue-50/50 via-sky-50/30 to-blue-50/50' 
+                          : isPast
+                          ? 'bg-gradient-to-br from-blue-50/30 via-sky-50/20 to-blue-50/30'
+                          : 'bg-gradient-to-br from-slate-50/50 to-white'
+                      }`}
                       animate={isActive ? {
                         background: [
-                          'linear-gradient(135deg, rgba(59, 130, 246, 0) 0%, rgba(14, 165, 233, 0) 50%, rgba(59, 130, 246, 0) 100%)',
-                          'linear-gradient(135deg, rgba(59, 130, 246, 0.04) 0%, rgba(14, 165, 233, 0.06) 50%, rgba(59, 130, 246, 0.04) 100%)',
-                          'linear-gradient(135deg, rgba(59, 130, 246, 0) 0%, rgba(14, 165, 233, 0) 50%, rgba(59, 130, 246, 0) 100%)',
+                          'linear-gradient(135deg, rgba(59, 130, 246, 0.05) 0%, rgba(14, 165, 233, 0.03) 50%, rgba(59, 130, 246, 0.05) 100%)',
+                          'linear-gradient(135deg, rgba(59, 130, 246, 0.08) 0%, rgba(14, 165, 233, 0.05) 50%, rgba(59, 130, 246, 0.08) 100%)',
+                          'linear-gradient(135deg, rgba(59, 130, 246, 0.05) 0%, rgba(14, 165, 233, 0.03) 50%, rgba(59, 130, 246, 0.05) 100%)',
                         ]
                       } : {}}
                       transition={{ duration: 4, repeat: Infinity, repeatDelay: 1 }}
                     />
                     
-                    {/* Image (if provided) */}
+                    {/* Shimmer effect */}
+                    <motion.div
+                      className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent z-0"
+                      animate={{
+                        x: ['-200%', '200%'],
+                      }}
+                      transition={{
+                        duration: 3,
+                        repeat: Infinity,
+                        repeatDelay: 2,
+                        ease: "linear"
+                      }}
+                    />
+                    
+                    {/* Text Content Section - Mobile: Full width, Desktop: Left Side (2/3) */}
+                    <div className="relative z-10 w-full md:flex-[2] p-5 sm:p-6 md:p-7 lg:p-8 flex flex-col justify-center order-2 md:order-1">
+                      {/* Content wrapper with better spacing */}
+                      <div className="space-y-4 sm:space-y-5">
+                        {item.content}
+                      </div>
+                    </div>
+
+                    {/* Image Section - Mobile: Full width top, Desktop: Right Side (1/3) */}
                     {item.image && (
                       <motion.div
-                        initial={{ opacity: 0, scale: 0.9, y: 20 }}
-                        whileInView={{ opacity: 1, scale: 1, y: 0 }}
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
                         viewport={{ once: true }}
-                        transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
-                        className="relative w-full h-56 sm:h-64 md:h-72 lg:h-80 xl:h-96 overflow-hidden rounded-t-lg sm:rounded-t-xl md:rounded-t-2xl"
+                        transition={{ duration: 0.5, ease: "easeOut" }}
+                        className="relative w-full h-64 sm:h-72 md:h-auto md:flex-1 overflow-hidden order-1 md:order-2 md:rounded-r-2xl md:rounded-l-none rounded-t-2xl md:rounded-t-3xl"
                       >
-                        {/* Elegant gradient overlays */}
-                        <div className="absolute inset-0 bg-gradient-to-br from-blue-600/20 via-sky-500/15 to-blue-600/20 z-10"></div>
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent z-10"></div>
-                        <div className="absolute inset-0 bg-gradient-to-r from-blue-900/10 via-transparent to-sky-900/10 z-10"></div>
-                        
-                        {/* Shimmer effect overlay */}
-                        <motion.div
-                          className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent z-10"
-                          animate={{
-                            x: ['-100%', '200%'],
-                          }}
-                          transition={{
-                            duration: 3,
-                            repeat: Infinity,
-                            repeatDelay: 2,
-                            ease: "linear"
-                          }}
-                        />
-                        
-                        {/* Main image with elegant effects */}
+                        {/* Image with overlay */}
                         <motion.img
                           src={item.image}
                           alt={item.title}
                           loading="lazy"
                           decoding="async"
-                          className="w-full h-full object-cover"
-                          whileHover={{ scale: 1.08 }}
-                          transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
-                          style={{ filter: 'brightness(1.05) contrast(1.1) saturate(1.1)' }}
+                          className="w-full h-full object-cover md:rounded-r-2xl md:rounded-l-none rounded-t-2xl md:rounded-t-3xl"
+                          whileHover={{ scale: 1.05 }}
+                          transition={{ duration: 0.6, ease: "easeOut" }}
                         />
                         
-                        {/* Elegant border glow effect with animated pulse */}
-                        <motion.div 
-                          className="absolute inset-0 border-2 border-white/30 rounded-t-lg sm:rounded-t-xl md:rounded-t-2xl z-20 pointer-events-none"
-                          animate={isActive ? {
-                            boxShadow: [
-                              '0 0 0 0px rgba(255, 255, 255, 0.3)',
-                              '0 0 0 4px rgba(255, 255, 255, 0.1)',
-                              '0 0 0 0px rgba(255, 255, 255, 0.3)',
-                            ]
-                          } : {}}
-                          transition={{ duration: 2, repeat: Infinity }}
-                        />
+                        {/* Gradient overlay */}
+                        <div className="absolute inset-0 bg-gradient-to-l from-black/40 via-black/10 to-transparent z-10 md:rounded-r-2xl rounded-t-2xl"></div>
+                        <div className="absolute inset-0 bg-gradient-to-br from-blue-600/10 via-transparent to-sky-600/10 z-10 md:rounded-r-2xl rounded-t-2xl"></div>
                         
-                        {/* Decorative corner elements with elegant glow */}
-                        <motion.div 
-                          className="absolute top-4 right-4 w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 bg-gradient-to-br from-white/30 via-white/10 to-transparent rounded-bl-full backdrop-blur-md z-20 shadow-lg"
-                          animate={isActive ? { opacity: [0.5, 0.8, 0.5] } : { opacity: 0.5 }}
-                          transition={{ duration: 3, repeat: Infinity }}
-                        />
-                        <motion.div 
-                          className="absolute bottom-4 left-4 w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 bg-gradient-to-tr from-blue-500/40 via-blue-400/20 to-transparent rounded-tr-full backdrop-blur-md z-20 shadow-lg"
-                          animate={isActive ? { opacity: [0.4, 0.7, 0.4] } : { opacity: 0.4 }}
-                          transition={{ duration: 3, repeat: Infinity, delay: 0.5 }}
-                        />
-                        
-                        {/* Elegant frame shadow with glow */}
-                        <motion.div 
-                          className="absolute -inset-2 bg-gradient-to-br from-blue-400/30 via-sky-400/30 to-blue-400/30 rounded-t-lg sm:rounded-t-xl md:rounded-t-2xl blur-2xl -z-10"
-                          animate={isActive ? {
-                            opacity: [0.3, 0.6, 0.3],
-                            scale: [1, 1.05, 1]
-                          } : {
-                            opacity: 0
-                          }}
-                          transition={{ duration: 3, repeat: Infinity }}
-                        />
-                        
-                        {/* Subtle vignette effect */}
-                        <div 
-                          className="absolute inset-0 rounded-t-lg sm:rounded-t-xl md:rounded-t-2xl z-10 pointer-events-none"
-                          style={{
-                            background: 'radial-gradient(ellipse at center, transparent 0%, transparent 60%, rgba(0, 0, 0, 0.15) 100%)'
-                          }}
-                        ></div>
+                        {/* Animated border glow */}
+                        {isActive && (
+                          <motion.div 
+                            className="absolute inset-0 border-l-0 md:border-l-4 border-t-4 md:border-t-0 border-blue-400/30 z-20 pointer-events-none md:rounded-r-2xl rounded-t-2xl"
+                            animate={{
+                              opacity: [0.3, 0.6, 0.3],
+                            }}
+                            transition={{ duration: 2, repeat: Infinity }}
+                          />
+                        )}
                       </motion.div>
                     )}
 
-                    {/* Content */}
-                    <div className={`relative ${item.image ? 'p-3 sm:p-4 md:p-5 lg:p-6' : 'p-3 sm:p-4 md:p-5 lg:p-6 xl:p-8'}`}>
-                      {item.content}
-                    </div>
-
-                    {/* Decorative corner accent */}
-                    {(isActive || isPast) && (
-                      <motion.div
-                        initial={{ scale: 0, rotate: -45 }}
-                        animate={{ scale: 1, rotate: -45 }}
-                        className="absolute top-0 right-0 w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-32 lg:h-32 bg-gradient-to-br from-blue-400/15 to-sky-400/15 sm:from-blue-400/20 sm:to-sky-400/20 rounded-bl-full"
-                      />
+                    {/* Decorative elements */}
+                    {isActive && (
+                      <>
+                        {/* Top-right accent */}
+                        <motion.div
+                          initial={{ scale: 0, opacity: 0 }}
+                          animate={{ scale: 1, opacity: 1 }}
+                          className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-blue-400/10 to-sky-400/10 rounded-bl-full z-0"
+                        />
+                        {/* Bottom-left accent */}
+                        <motion.div
+                          initial={{ scale: 0, opacity: 0 }}
+                          animate={{ scale: 1, opacity: 1 }}
+                          transition={{ delay: 0.1 }}
+                          className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-sky-400/10 to-blue-400/10 rounded-tr-full z-0"
+                        />
+                      </>
                     )}
 
-                    {/* Connecting line indicator */}
-                    {index < data.length - 1 && (
-                      <div className="absolute -bottom-3 sm:-bottom-4 md:-bottom-6 lg:-bottom-8 left-1/2 -translate-x-1/2 w-0.5 h-3 sm:h-4 md:h-6 lg:h-8 bg-gradient-to-b from-slate-200 to-transparent" />
-                    )}
+                    {/* Bottom border accent */}
+                    <motion.div
+                      className={`absolute bottom-0 left-0 right-0 h-1 ${
+                        isActive 
+                          ? 'bg-gradient-to-r from-blue-500 via-sky-500 to-blue-500' 
+                          : isPast
+                          ? 'bg-gradient-to-r from-blue-400 via-sky-400 to-blue-400'
+                          : 'bg-gradient-to-r from-slate-200 via-slate-300 to-slate-200'
+                      }`}
+                      initial={{ scaleX: 0 }}
+                      animate={{ scaleX: isActive || isPast ? 1 : 0 }}
+                      transition={{ duration: 0.5 }}
+                    />
                   </div>
                 </motion.div>
               </div>

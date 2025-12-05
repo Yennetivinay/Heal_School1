@@ -1,6 +1,5 @@
-import { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { Menu, X, ChevronDown } from "lucide-react";
-import React from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const navItems = [
@@ -44,7 +43,7 @@ function AppleNavbar() {
   const location = useLocation();
   const navigate = useNavigate();
   const [isVisible, setIsVisible] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
+  const lastScrollYRef = useRef(0);
   const [activeNav, setActiveNav] = useState(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [openSubmenu, setOpenSubmenu] = useState(null);
@@ -53,6 +52,7 @@ function AppleNavbar() {
   const itemRefs = useRef({});
   const mobileMenuRef = useRef(null);
   const [indicatorStyle, setIndicatorStyle] = useState({ left: 0, width: 0, height: 0, opacity: 0 });
+  const [logoLoaded, setLogoLoaded] = useState({ desktop: false, mobile: false });
 
   // Handle logo click - navigate to landing page or scroll to top if already there
   const handleLogoClick = (e) => {
@@ -110,36 +110,61 @@ function AppleNavbar() {
     }
   };
 
+  // Scroll-based navbar visibility - hide on scroll down, show on scroll up
   useEffect(() => {
+    // Hide the instant HTML placeholder immediately when React navbar loads
+    const instantPlaceholder = document.getElementById('instant-logo-placeholder');
+    if (instantPlaceholder) {
+      // Hide immediately
+      instantPlaceholder.style.display = 'none';
+      // Remove from DOM
+      if (instantPlaceholder.parentNode) {
+        instantPlaceholder.parentNode.removeChild(instantPlaceholder);
+      }
+    }
+
+    // Scroll detection for navbar visibility
     const handleScroll = () => {
-      // Don't process scroll events when modal is open
-      if (document.body.hasAttribute('data-modal-open')) {
-        return;
-      }
-      
       const currentScrollY = window.scrollY;
-
-      if (currentScrollY > lastScrollY && currentScrollY > 100) {
-        // Scrolling down
-        setIsVisible(false);
-        setIsMobileMenuOpen(false);
-        setHoveredItem(null);
-      } else if (currentScrollY < lastScrollY) {
-        // Scrolling up
-        setIsVisible(true);
-      }
-
+      const lastScrollY = lastScrollYRef.current;
+      
       // Always show navbar at the top of the page
       if (currentScrollY < 10) {
         setIsVisible(true);
+        lastScrollYRef.current = currentScrollY;
+        return;
       }
 
-      setLastScrollY(currentScrollY);
+      // Show navbar when scrolling up, hide when scrolling down
+      if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        // Scrolling down - hide navbar
+        setIsVisible(false);
+      } else if (currentScrollY < lastScrollY) {
+        // Scrolling up - show navbar
+        setIsVisible(true);
+      }
+
+      lastScrollYRef.current = currentScrollY;
     };
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [lastScrollY]);
+    // Throttle scroll events for better performance
+    let ticking = false;
+    const throttledHandleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          handleScroll();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener('scroll', throttledHandleScroll, { passive: true });
+    
+    return () => {
+      window.removeEventListener('scroll', throttledHandleScroll);
+    };
+  }, []);
 
   // Hide navbar when modal is open, restore when modal closes
   useEffect(() => {
@@ -149,15 +174,8 @@ function AppleNavbar() {
         setIsVisible(false);
         setIsMobileMenuOpen(false);
       } else {
-        // Restore navbar visibility based on scroll position when modal closes
-        const currentScrollY = window.scrollY;
-        if (currentScrollY < 10) {
-          setIsVisible(true);
-        } else if (currentScrollY > lastScrollY && currentScrollY > 100) {
-          setIsVisible(false);
-        } else {
-          setIsVisible(true);
-        }
+        // Always show navbar when modal closes
+        setIsVisible(true);
       }
     };
 
@@ -172,7 +190,7 @@ function AppleNavbar() {
     });
 
     return () => observer.disconnect();
-  }, [lastScrollY]);
+  }, []);
 
   // Close mobile menu when clicking outside
   useEffect(() => {
@@ -273,6 +291,27 @@ function AppleNavbar() {
       opacity: 1,
     });
   }, [isItemActive]);
+
+  // Preload page on hover for instant navigation
+  const handleNavHover = (targetPath) => {
+    if (!targetPath) return;
+    
+    // Map paths to page imports - Navbar is in components/layout/, so need ../../ to reach pages/
+    const pageMap = {
+      '/': () => import('../../pages/LandingPage'),
+      '/about': () => import('../../pages/AboutPage'),
+      '/awards': () => import('../../pages/AwardsPage'),
+      '/gallery': () => import('../../pages/GalleryPage'),
+    };
+    
+    const preloadPage = pageMap[targetPath];
+    if (preloadPage) {
+      // Preload on hover for instant navigation
+      preloadPage().catch(() => {
+        // Silently handle failures
+      });
+    }
+  };
 
   // Handle navigation click - Safari-compatible
   const handleNavClick = (id, closeMobileMenu = true, targetPath = null) => {
@@ -380,7 +419,9 @@ function AppleNavbar() {
       {/* Desktop Navbar */}
       <nav
             className={`hidden lg:block fixed top-4 left-1/2 -translate-x-1/2 z-50 transition-all duration-500 ease-in-out max-w-7xl w-fit px-4 ${
-              isVisible ? "translate-y-0 opacity-100" : "-translate-y-32 opacity-0"
+              isVisible 
+                ? 'translate-y-0 opacity-100 pointer-events-auto' 
+                : '-translate-y-full opacity-0 pointer-events-none'
             }`}
       >
         <div className="flex items-center justify-between bg-white h-12 md:h-12 border border-black/20 ring-1 ring-black/10 rounded-full px-3 md:px-5 py-1 shadow-[0_12px_50px_rgba(0,0,0,0.12)] mx-auto">
@@ -388,14 +429,35 @@ function AppleNavbar() {
           <a 
             href="/"
             onClick={handleLogoClick}
-            className="bg-white w-10 h-10 rounded-full mr-5 border border-black/20 flex items-center justify-center cursor-pointer hover:bg-slate-50 transition-colors"
+            className="bg-white w-10 h-10 rounded-full mr-5 border border-black/20 flex items-center justify-center cursor-pointer hover:bg-slate-50 transition-colors relative"
             role="button"
             aria-label="Go to home page"
           >
+            {/* Placeholder logo - renders immediately */}
+            {!logoLoaded.desktop && (
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-sky-500 rounded-full flex items-center justify-center text-white font-bold text-xs shadow-md">
+                  HP
+                </div>
+              </div>
+            )}
+            {/* Actual logo - fades in when loaded */}
             <img
               src="/logo.png"
               alt="Logo"
-              className="h-8 md:h-8 lg:h-9 w-auto max-w-xs object-contain mr-0 shrink-0"
+              className={`h-8 md:h-8 lg:h-9 w-auto max-w-xs object-contain mr-0 shrink-0 transition-opacity duration-300 ${
+                logoLoaded.desktop ? 'opacity-100' : 'opacity-0'
+              }`}
+              width="32"
+              height="32"
+              loading="eager"
+              decoding="sync"
+              fetchPriority="high"
+              onLoad={() => setLogoLoaded(prev => ({ ...prev, desktop: true }))}
+              onError={(e) => {
+                setLogoLoaded(prev => ({ ...prev, desktop: true }));
+                e.target.style.display = 'none';
+              }}
             />
           </a>
           
@@ -426,6 +488,7 @@ function AppleNavbar() {
                   <Link
                     to={item.to}
                     onClick={() => handleNavClick(item.id, true, item.to)}
+                    onMouseEnter={() => handleNavHover(item.to)}
                     ref={(el) => (itemRefs.current[item.id] = el)}
                     className={`relative z-10 group px-3 xl:px-4 py-2 mx-0.5 rounded-full text-xs xl:text-sm font-medium whitespace-nowrap flex items-center gap-1 transition-colors duration-150 ${
                       isItemActive(item)
@@ -474,6 +537,7 @@ function AppleNavbar() {
                               handleNavClick(subItem.id, true, subItem.to);
                               setHoveredItem(null);
                             }}
+                            onMouseEnter={() => handleNavHover(subItem.to)}
                             className={`block w-full text-left px-4 py-2 text-sm rounded-full transition-colors duration-200 whitespace-nowrap ${
                               activeNav === subItem.id
                                 ? "bg-gradient-to-r from-blue-600 to-sky-500 text-white shadow-lg"
@@ -512,7 +576,9 @@ function AppleNavbar() {
       {/* Mobile Navbar */}
       <nav
   className={`lg:hidden fixed top-4 left-4 right-4 z-50 transition-all duration-500 ease-in-out ${
-    isVisible ? "translate-y-0 opacity-100" : "-translate-y-32 opacity-0"
+    isVisible 
+      ? 'translate-y-0 opacity-100 pointer-events-auto' 
+      : '-translate-y-full opacity-0 pointer-events-none'
   }`}
 >
   <div 
@@ -524,12 +590,33 @@ function AppleNavbar() {
          <a 
            href="/"
            onClick={handleLogoClick}
-           className="w-10 h-10 bg-white rounded-full flex items-center justify-center border border-black/20 cursor-pointer"
+           className="w-10 h-10 bg-white rounded-full flex items-center justify-center border border-black/20 cursor-pointer relative"
          >
+           {/* Placeholder logo - renders immediately */}
+           {!logoLoaded.mobile && (
+             <div className="absolute inset-0 flex items-center justify-center">
+               <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-sky-500 rounded-full flex items-center justify-center text-white font-bold text-xs shadow-md">
+                 HP
+               </div>
+             </div>
+           )}
+           {/* Actual logo - fades in when loaded */}
            <img
              src="/logo.png"
              alt="Logo"
-             className="h-8 w-auto max-w-xs object-contain"
+             className={`h-8 w-auto max-w-xs object-contain transition-opacity duration-300 ${
+               logoLoaded.mobile ? 'opacity-100' : 'opacity-0'
+             }`}
+             width="32"
+             height="32"
+             loading="eager"
+             decoding="sync"
+             fetchPriority="high"
+             onLoad={() => setLogoLoaded(prev => ({ ...prev, mobile: true }))}
+             onError={(e) => {
+               setLogoLoaded(prev => ({ ...prev, mobile: true }));
+               e.target.style.display = 'none';
+             }}
            />
          </a>
         <span className="text-black font-semibold text-lg">Heal School</span>
@@ -593,6 +680,7 @@ function AppleNavbar() {
                             handleNavClick(subItem.id);
                             // Allow navigation to proceed
                           }}
+                          onMouseEnter={() => handleNavHover(subItem.to)}
                           className={`block w-full text-left px-4 py-2 text-sm rounded-full transition-colors duration-200 whitespace-normal break-words ${
                             activeNav === subItem.id
                               ? "bg-gradient-to-r from-blue-600 to-sky-500 text-white shadow-lg"
@@ -631,6 +719,7 @@ function AppleNavbar() {
                     handleNavClick(item.id, true, item.to);
                     // Allow navigation to proceed
                   }}
+                  onMouseEnter={() => handleNavHover(item.to)}
                   className={`block w-full text-left text-sm font-medium transition-all duration-300 whitespace-normal break-words ${
                     activeNav === item.id
                       ? "text-white"

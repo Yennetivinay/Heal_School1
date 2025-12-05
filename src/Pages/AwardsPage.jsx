@@ -121,15 +121,10 @@ const AwardsPage = () => {
             transition={{ duration: 0.8 }}
             className="text-center mb-16"
           >
-            <motion.div
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="inline-flex items-center gap-2 rounded-full bg-white/80 backdrop-blur-sm border border-blue-200/50 px-4 py-2 text-sm font-medium text-blue-700 shadow-sm mb-6"
-            >
-              <Sparkles className="w-4 h-4" />
-              Our Achievements
-            </motion.div>
+            <div className="inline-flex items-center gap-2 rounded-full bg-white/80 backdrop-blur-sm border border-blue-200/50 px-4 py-2 text-sm font-medium text-blue-700 shadow-sm mb-6">
+              <Sparkles className="w-4 h-4 shrink-0" aria-hidden="true" />
+              <span>Our Achievements</span>
+            </div>
 
             <motion.h1
               initial={{ opacity: 0, y: 20 }}

@@ -33,12 +33,32 @@ export default defineConfig({
     },
     rollupOptions: {
       output: {
-        manualChunks: {
-          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
-          'framer-motion': ['framer-motion'],
-          'lucide-icons': ['lucide-react'],
-          'lottie': ['@lottiefiles/dotlottie-react', 'lottie-react'],
-          'lenis': ['lenis'],
+        manualChunks: (id) => {
+          // Vendor chunks
+          if (id.includes('node_modules')) {
+            if (id.includes('react') || id.includes('react-dom') || id.includes('react-router')) {
+              return 'react-vendor';
+            }
+            if (id.includes('framer-motion')) {
+              return 'framer-motion';
+            }
+            if (id.includes('lucide-react')) {
+              return 'lucide-icons';
+            }
+            if (id.includes('lottie') || id.includes('dotlottie')) {
+              return 'lottie';
+            }
+            if (id.includes('lenis')) {
+              return 'lenis';
+            }
+          }
+          // Page chunks - separate for better caching
+          if (id.includes('/Pages/')) {
+            const pageName = id.split('/Pages/')[1]?.split('.')[0];
+            if (pageName) {
+              return `page-${pageName.toLowerCase()}`;
+            }
+          }
         },
       },
     },

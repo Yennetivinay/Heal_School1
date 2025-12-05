@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { GraduationCap, Mail, Phone, MapPin, Facebook, Twitter, Instagram, Youtube, Linkedin } from 'lucide-react';
 
@@ -6,6 +6,7 @@ const Footer = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const currentYear = new Date().getFullYear();
+  const [logoLoaded, setLogoLoaded] = useState(false);
 
   // Handle logo click - navigate to landing page or scroll to top if already there
   const handleLogoClick = (e) => {
@@ -83,12 +84,30 @@ const Footer = () => {
               <a 
                 href="/"
                 onClick={handleLogoClick}
-                className="bg-white w-10 h-10 rounded-full flex items-center justify-center border border-white/20 cursor-pointer hover:bg-slate-100 transition-colors"
+                className="bg-white w-10 h-10 rounded-full flex items-center justify-center border border-white/20 cursor-pointer hover:bg-slate-100 transition-colors relative"
               >
+                {/* Placeholder logo - renders immediately */}
+                {!logoLoaded && (
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-sky-500 rounded-full flex items-center justify-center text-white font-bold text-xs shadow-md">
+                      HP
+                    </div>
+                  </div>
+                )}
+                {/* Actual logo - fades in when loaded */}
                 <img
                   src="/logo.png"
                   alt="Heal Paradise School Logo"
-                  className="h-8 w-auto object-contain"
+                  className={`h-8 w-auto object-contain transition-opacity duration-300 ${
+                    logoLoaded ? 'opacity-100' : 'opacity-0'
+                  }`}
+                  width="32"
+                  height="32"
+                  loading="eager"
+                  decoding="sync"
+                  fetchPriority="high"
+                  onLoad={() => setLogoLoaded(true)}
+                  onError={() => setLogoLoaded(true)}
                 />
               </a>
               <div>

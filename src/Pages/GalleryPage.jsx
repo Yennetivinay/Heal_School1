@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 
 const GalleryPage = () => {
+
   // Gallery categories with images
   const galleryCards = [
     {
@@ -83,10 +84,6 @@ const GalleryPage = () => {
     },
   ];
 
-  const handleCardClick = (card) => {
-    console.log('Card clicked:', card);
-    // You can add navigation or modal opening logic here
-  };
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-slate-100 via-slate-50 to-slate-100 relative overflow-hidden">
@@ -106,15 +103,10 @@ const GalleryPage = () => {
             transition={{ duration: 0.8 }}
             className="text-center mb-8"
           >
-            <motion.div
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="inline-flex items-center gap-2 rounded-full bg-white/80 backdrop-blur-sm border border-blue-200/50 px-4 py-2 text-sm font-medium text-blue-700 shadow-sm mb-4"
-            >
-              <Camera className="w-4 h-4" />
-              Photo Gallery
-            </motion.div>
+            <div className="inline-flex items-center gap-2 rounded-full bg-white/80 backdrop-blur-sm border border-blue-200/50 px-4 py-2 text-sm font-medium text-blue-700 shadow-sm mb-4">
+              <Camera className="w-4 h-4 shrink-0" aria-hidden="true" />
+              <span>Photo Gallery</span>
+            </div>
 
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
@@ -160,7 +152,6 @@ const GalleryPage = () => {
           <MorphingCardStack
             cards={galleryCards}
             defaultLayout="stack"
-            onCardClick={handleCardClick}
             className="min-h-[600px]"
           />
         </div>

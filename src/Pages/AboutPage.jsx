@@ -34,8 +34,7 @@ import {
   Phone,
   Mail,
   Calendar,
-  Quote,
-  X
+  Quote
 } from 'lucide-react';
 
 // Custom hook for count-up animation
@@ -120,119 +119,6 @@ const CountUp = ({ end, suffix = '', duration = 2000 }) => {
 };
 
 const AboutPage = () => {
-  // State for facility modal
-  const [selectedFacility, setSelectedFacility] = useState(null);
-  const scrollPositionRef = useRef(0);
-
-  // Close modal on ESC key
-  useEffect(() => {
-    const handleEscape = (e) => {
-      if (e.key === 'Escape' && selectedFacility) {
-        setSelectedFacility(null);
-      }
-    };
-    window.addEventListener('keydown', handleEscape);
-    return () => window.removeEventListener('keydown', handleEscape);
-  }, [selectedFacility]);
-
-  // Prevent body scroll when modal is open and disable Lenis
-  useEffect(() => {
-    if (selectedFacility) {
-      // Save current scroll position in ref for reliable restoration
-      scrollPositionRef.current = window.scrollY || window.pageYOffset || document.documentElement.scrollTop;
-      
-      document.body.style.position = 'fixed';
-      document.body.style.top = `-${scrollPositionRef.current}px`;
-      document.body.style.width = '100%';
-      document.body.style.overflow = 'hidden';
-      
-      // Add data attribute to body to indicate modal is open
-      document.body.setAttribute('data-modal-open', 'true');
-      
-      // Disable Lenis smooth scroll when modal is open
-      if (window.lenis) {
-        window.lenis.stop();
-      }
-      
-      // Prevent scroll events from reaching window/document, but allow modal content to scroll
-      const preventBackgroundScroll = (e) => {
-        // Check if the event target is inside the modal
-        const modal = document.querySelector('[data-modal-content]');
-        if (modal && modal.contains(e.target)) {
-          return; // Allow scrolling within modal
-        }
-        // Prevent scrolling on background
-        e.preventDefault();
-        e.stopPropagation();
-        e.stopImmediatePropagation();
-      };
-      
-      // Prevent scroll events at window level with capture to stop Navbar from detecting them
-      const preventWindowScroll = (e) => {
-        // Check if the event target is inside the modal
-        const modal = document.querySelector('[data-modal-content]');
-        if (modal && modal.contains(e.target)) {
-          return; // Allow scrolling within modal
-        }
-        // Stop all scroll-related events from reaching window
-        e.preventDefault();
-        e.stopPropagation();
-        e.stopImmediatePropagation();
-        return false;
-      };
-      
-      // Add listeners at multiple levels to catch all scroll events
-      window.addEventListener('wheel', preventWindowScroll, { passive: false, capture: true });
-      window.addEventListener('touchmove', preventWindowScroll, { passive: false, capture: true });
-      window.addEventListener('scroll', preventWindowScroll, { passive: false, capture: true });
-      document.addEventListener('wheel', preventBackgroundScroll, { passive: false, capture: true });
-      document.addEventListener('touchmove', preventBackgroundScroll, { passive: false, capture: true });
-      document.addEventListener('scroll', preventBackgroundScroll, { passive: false, capture: true });
-      
-      return () => {
-        window.removeEventListener('wheel', preventWindowScroll, { capture: true });
-        window.removeEventListener('touchmove', preventWindowScroll, { capture: true });
-        window.removeEventListener('scroll', preventWindowScroll, { capture: true });
-        document.removeEventListener('wheel', preventBackgroundScroll, { capture: true });
-        document.removeEventListener('touchmove', preventBackgroundScroll, { capture: true });
-        document.removeEventListener('scroll', preventBackgroundScroll, { capture: true });
-        document.body.removeAttribute('data-modal-open');
-      };
-    } else {
-      // Restore scroll position using ref
-      const savedScroll = scrollPositionRef.current;
-      
-      // Restore body styles
-      document.body.style.position = '';
-      document.body.style.top = '';
-      document.body.style.width = '';
-      document.body.style.overflow = '';
-      document.body.removeAttribute('data-modal-open');
-      
-      // Re-enable Lenis smooth scroll
-      if (window.lenis) {
-        window.lenis.start();
-      }
-      
-      // Restore scroll position - use requestAnimationFrame to ensure DOM is ready
-      requestAnimationFrame(() => {
-        // Try Lenis first if available
-        if (window.lenis && typeof window.lenis.scrollTo === 'function') {
-          try {
-            window.lenis.scrollTo(savedScroll, { immediate: true });
-          } catch (err) {
-            window.scrollTo({ top: savedScroll, left: 0, behavior: 'instant' });
-          }
-        } else {
-          window.scrollTo({ top: savedScroll, left: 0, behavior: 'instant' });
-        }
-        
-        // Backup: directly set scroll position
-        document.documentElement.scrollTop = savedScroll;
-        document.body.scrollTop = savedScroll;
-      });
-    }
-  }, [selectedFacility]);
 
   // Scroll to top on component mount and prevent scroll restoration
   useEffect(() => {
@@ -319,29 +205,33 @@ const AboutPage = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.3 }}
-          className="space-y-3"
+          transition={{ duration: 0.4 }}
+          className="space-y-4"
         >
-          <div className="flex items-center gap-3 sm:gap-4 mb-2 sm:mb-3">
+          <div className="flex items-start gap-4 sm:gap-5">
             <motion.div
               whileHover={{ scale: 1.1, rotate: 5 }}
-              className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-xl sm:rounded-2xl bg-gradient-to-br from-blue-500 to-sky-500 flex items-center justify-center shadow-xl flex-shrink-0"
+              className="w-14 h-14 sm:w-16 sm:h-16 md:w-18 md:h-18 rounded-2xl bg-gradient-to-br from-blue-500 to-sky-500 flex items-center justify-center shadow-lg flex-shrink-0 ring-4 ring-blue-100"
             >
-              <Building2 className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-white" />
+              <Building2 className="w-7 h-7 sm:w-8 sm:h-8 md:w-9 md:h-9 text-white" />
             </motion.div>
-            <div className="flex-1 min-w-0">
-              <h4 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-slate-900 mb-0.5 sm:mb-1">Foundation</h4>
-              <p className="text-xs sm:text-sm text-slate-500 font-medium">The Beginning</p>
+            <div className="flex-1 min-w-0 pt-1">
+              <h4 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-900 mb-1.5 bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent">
+                Foundation
+              </h4>
+              <p className="text-sm sm:text-base text-slate-500 font-semibold uppercase tracking-wide">The Beginning</p>
             </div>
           </div>
-          <p className="text-sm sm:text-base md:text-lg text-slate-700 leading-relaxed">
-            Heal Paradise School was established with a vision to provide free, quality education to underprivileged children.
-            Our journey began with a simple yet powerful mission: to break the cycle of poverty through education.
-          </p>
-          <div className="flex flex-wrap gap-2 pt-1">
-            <span className="px-2.5 py-1 rounded-full bg-blue-100 text-blue-700 text-xs font-semibold">Vision</span>
-            <span className="px-2.5 py-1 rounded-full bg-sky-100 text-sky-700 text-xs font-semibold">Mission</span>
-        </div>
+          <div className="pl-0 sm:pl-20">
+            <p className="text-base sm:text-lg md:text-xl text-slate-700 leading-relaxed font-medium">
+              Heal Paradise School was established with a vision to provide free, quality education to underprivileged children.
+              Our journey began with a simple yet powerful mission: to break the cycle of poverty through education.
+            </p>
+            <div className="flex flex-wrap gap-2.5 mt-4">
+              <span className="px-4 py-1.5 rounded-full bg-gradient-to-r from-blue-500 to-sky-500 text-white text-sm font-bold shadow-md">Vision</span>
+              <span className="px-4 py-1.5 rounded-full bg-gradient-to-r from-sky-500 to-blue-500 text-white text-sm font-bold shadow-md">Mission</span>
+            </div>
+          </div>
         </motion.div>
       )
     },
@@ -353,29 +243,33 @@ const AboutPage = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.3 }}
-          className="space-y-3"
+          transition={{ duration: 0.4 }}
+          className="space-y-4"
         >
-          <div className="flex items-center gap-3 sm:gap-4 mb-2 sm:mb-3">
+          <div className="flex items-start gap-4 sm:gap-5">
             <motion.div
               whileHover={{ scale: 1.1, rotate: 5 }}
-              className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-xl sm:rounded-2xl bg-gradient-to-br from-emerald-500 to-green-500 flex items-center justify-center shadow-xl flex-shrink-0"
+              className="w-14 h-14 sm:w-16 sm:h-16 md:w-18 md:h-18 rounded-2xl bg-gradient-to-br from-emerald-500 to-green-500 flex items-center justify-center shadow-lg flex-shrink-0 ring-4 ring-emerald-100"
             >
-              <Award className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-white" />
+              <Award className="w-7 h-7 sm:w-8 sm:h-8 md:w-9 md:h-9 text-white" />
             </motion.div>
-            <div className="flex-1 min-w-0">
-              <h4 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-slate-900 mb-0.5 sm:mb-1">CBSE Affiliation</h4>
-              <p className="text-xs sm:text-sm text-slate-500 font-medium">Recognition Achieved</p>
+            <div className="flex-1 min-w-0 pt-1">
+              <h4 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-900 mb-1.5 bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent">
+                CBSE Affiliation
+              </h4>
+              <p className="text-sm sm:text-base text-slate-500 font-semibold uppercase tracking-wide">Recognition Achieved</p>
             </div>
           </div>
-          <p className="text-sm sm:text-base md:text-lg text-slate-700 leading-relaxed">
-            Successfully obtained CBSE affiliation, ensuring our students receive recognized, high-quality education.
-            This milestone validated our commitment to academic excellence and opened doors to better opportunities.
-          </p>
-          <div className="flex flex-wrap gap-2 pt-1">
-            <span className="px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-700 text-xs font-semibold">CBSE</span>
-            <span className="px-2.5 py-1 rounded-full bg-green-100 text-green-700 text-xs font-semibold">Quality</span>
-        </div>
+          <div className="pl-0 sm:pl-20">
+            <p className="text-base sm:text-lg md:text-xl text-slate-700 leading-relaxed font-medium">
+              Successfully obtained CBSE affiliation, ensuring our students receive recognized, high-quality education.
+              This milestone validated our commitment to academic excellence and opened doors to better opportunities.
+            </p>
+            <div className="flex flex-wrap gap-2.5 mt-4">
+              <span className="px-4 py-1.5 rounded-full bg-gradient-to-r from-emerald-500 to-green-500 text-white text-sm font-bold shadow-md">CBSE</span>
+              <span className="px-4 py-1.5 rounded-full bg-gradient-to-r from-green-500 to-emerald-500 text-white text-sm font-bold shadow-md">Quality</span>
+            </div>
+          </div>
         </motion.div>
       )
     },
@@ -387,29 +281,33 @@ const AboutPage = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.3 }}
-          className="space-y-3"
+          transition={{ duration: 0.4 }}
+          className="space-y-4"
         >
-          <div className="flex items-center gap-3 sm:gap-4 mb-2 sm:mb-3">
+          <div className="flex items-start gap-4 sm:gap-5">
             <motion.div
               whileHover={{ scale: 1.1, rotate: 5 }}
-              className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-xl sm:rounded-2xl bg-gradient-to-br from-amber-500 to-yellow-500 flex items-center justify-center shadow-xl flex-shrink-0"
+              className="w-14 h-14 sm:w-16 sm:h-16 md:w-18 md:h-18 rounded-2xl bg-gradient-to-br from-amber-500 to-yellow-500 flex items-center justify-center shadow-lg flex-shrink-0 ring-4 ring-amber-100"
             >
-              <TrendingUp className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-white" />
+              <TrendingUp className="w-7 h-7 sm:w-8 sm:h-8 md:w-9 md:h-9 text-white" />
             </motion.div>
-            <div className="flex-1 min-w-0">
-              <h4 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-slate-900 mb-0.5 sm:mb-1">Expansion</h4>
-              <p className="text-xs sm:text-sm text-slate-500 font-medium">Growing Strong</p>
+            <div className="flex-1 min-w-0 pt-1">
+              <h4 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-900 mb-1.5 bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent">
+                Expansion
+              </h4>
+              <p className="text-sm sm:text-base text-slate-500 font-semibold uppercase tracking-wide">Growing Strong</p>
             </div>
           </div>
-          <p className="text-sm sm:text-base md:text-lg text-slate-700 leading-relaxed">
-            Expanded facilities to accommodate more students, adding new classrooms, state-of-the-art labs, 
-            and enhanced residential facilities. Our growth reflected the increasing trust and impact in the community.
-          </p>
-          <div className="flex flex-wrap gap-2 pt-1">
-            <span className="px-2.5 py-1 rounded-full bg-amber-100 text-amber-700 text-xs font-semibold">Growth</span>
-            <span className="px-2.5 py-1 rounded-full bg-yellow-100 text-yellow-700 text-xs font-semibold">Facilities</span>
-        </div>
+          <div className="pl-0 sm:pl-20">
+            <p className="text-base sm:text-lg md:text-xl text-slate-700 leading-relaxed font-medium">
+              Expanded facilities to accommodate more students, adding new classrooms, state-of-the-art labs, 
+              and enhanced residential facilities. Our growth reflected the increasing trust and impact in the community.
+            </p>
+            <div className="flex flex-wrap gap-2.5 mt-4">
+              <span className="px-4 py-1.5 rounded-full bg-gradient-to-r from-amber-500 to-yellow-500 text-white text-sm font-bold shadow-md">Growth</span>
+              <span className="px-4 py-1.5 rounded-full bg-gradient-to-r from-yellow-500 to-amber-500 text-white text-sm font-bold shadow-md">Facilities</span>
+            </div>
+          </div>
         </motion.div>
       )
     },
@@ -422,28 +320,32 @@ const AboutPage = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.3 }}
-          className="space-y-3"
+          className="space-y-4"
         >
-          <div className="flex items-center gap-3 sm:gap-4 mb-2 sm:mb-3">
+          <div className="flex items-start gap-4 sm:gap-5">
             <motion.div
               whileHover={{ scale: 1.1, rotate: 5 }}
-              className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-xl sm:rounded-2xl bg-gradient-to-br from-purple-500 to-violet-500 flex items-center justify-center shadow-xl flex-shrink-0"
+              className="w-14 h-14 sm:w-16 sm:h-16 md:w-18 md:h-18 rounded-2xl bg-gradient-to-br from-purple-500 to-violet-500 flex items-center justify-center shadow-lg flex-shrink-0 ring-4 ring-purple-100"
             >
-              <Star className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-white" />
+              <Star className="w-7 h-7 sm:w-8 sm:h-8 md:w-9 md:h-9 text-white" />
             </motion.div>
-            <div className="flex-1 min-w-0">
-              <h4 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-slate-900 mb-0.5 sm:mb-1">Recognition</h4>
-              <p className="text-xs sm:text-sm text-slate-500 font-medium">Excellence Acknowledged</p>
+            <div className="flex-1 min-w-0 pt-1">
+              <h4 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-900 mb-1.5 bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent">
+                Recognition
+              </h4>
+              <p className="text-sm sm:text-base text-slate-500 font-semibold uppercase tracking-wide">Excellence Acknowledged</p>
             </div>
           </div>
-          <p className="text-sm sm:text-base md:text-lg text-slate-700 leading-relaxed">
-            Received multiple awards for excellence in education and social impact, gaining national recognition.
-            Our dedication to transforming lives through education was celebrated and acknowledged at the highest levels.
-          </p>
-          <div className="flex flex-wrap gap-2 pt-1">
-            <span className="px-2.5 py-1 rounded-full bg-purple-100 text-purple-700 text-xs font-semibold">Awards</span>
-            <span className="px-2.5 py-1 rounded-full bg-violet-100 text-violet-700 text-xs font-semibold">Excellence</span>
-        </div>
+          <div className="pl-0 sm:pl-20">
+            <p className="text-base sm:text-lg md:text-xl text-slate-700 leading-relaxed font-medium">
+              Received multiple awards for excellence in education and social impact, gaining national recognition.
+              Our dedication to transforming lives through education was celebrated and acknowledged at the highest levels.
+            </p>
+            <div className="flex flex-wrap gap-2.5 mt-4">
+              <span className="px-4 py-1.5 rounded-full bg-gradient-to-r from-purple-500 to-violet-500 text-white text-sm font-bold shadow-md">Awards</span>
+              <span className="px-4 py-1.5 rounded-full bg-gradient-to-r from-violet-500 to-purple-500 text-white text-sm font-bold shadow-md">Excellence</span>
+            </div>
+          </div>
         </motion.div>
       )
     },
@@ -456,28 +358,32 @@ const AboutPage = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.3 }}
-          className="space-y-3"
+          className="space-y-4"
         >
-          <div className="flex items-center gap-3 sm:gap-4 mb-2 sm:mb-3">
+          <div className="flex items-start gap-4 sm:gap-5">
             <motion.div
               whileHover={{ scale: 1.1, rotate: 5 }}
-              className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-xl sm:rounded-2xl bg-gradient-to-br from-rose-500 to-pink-500 flex items-center justify-center shadow-xl flex-shrink-0"
+              className="w-14 h-14 sm:w-16 sm:h-16 md:w-18 md:h-18 rounded-2xl bg-gradient-to-br from-rose-500 to-pink-500 flex items-center justify-center shadow-lg flex-shrink-0 ring-4 ring-rose-100"
             >
-              <Users className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-white" />
+              <Users className="w-7 h-7 sm:w-8 sm:h-8 md:w-9 md:h-9 text-white" />
             </motion.div>
-            <div className="flex-1 min-w-0">
-              <h4 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-slate-900 mb-0.5 sm:mb-1">500+ Students</h4>
-              <p className="text-xs sm:text-sm text-slate-500 font-medium">Milestone Reached</p>
+            <div className="flex-1 min-w-0 pt-1">
+              <h4 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-900 mb-1.5 bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent">
+                500+ Students
+              </h4>
+              <p className="text-sm sm:text-base text-slate-500 font-semibold uppercase tracking-wide">Milestone Reached</p>
             </div>
           </div>
-          <p className="text-sm sm:text-base md:text-lg text-slate-700 leading-relaxed">
-            Reached a milestone of 500+ students, transforming lives through education and compassionate care.
-            Each student represents a story of hope, resilience, and the power of education to change destinies.
-          </p>
-          <div className="flex flex-wrap gap-2 pt-1">
-            <span className="px-2.5 py-1 rounded-full bg-rose-100 text-rose-700 text-xs font-semibold">500+</span>
-            <span className="px-2.5 py-1 rounded-full bg-pink-100 text-pink-700 text-xs font-semibold">Impact</span>
-        </div>
+          <div className="pl-0 sm:pl-20">
+            <p className="text-base sm:text-lg md:text-xl text-slate-700 leading-relaxed font-medium">
+              Reached a milestone of 500+ students, transforming lives through education and compassionate care.
+              Each student represents a story of hope, resilience, and the power of education to change destinies.
+            </p>
+            <div className="flex flex-wrap gap-2.5 mt-4">
+              <span className="px-4 py-1.5 rounded-full bg-gradient-to-r from-rose-500 to-pink-500 text-white text-sm font-bold shadow-md">500+</span>
+              <span className="px-4 py-1.5 rounded-full bg-gradient-to-r from-pink-500 to-rose-500 text-white text-sm font-bold shadow-md">Impact</span>
+            </div>
+          </div>
         </motion.div>
       )
     },
@@ -585,7 +491,7 @@ const AboutPage = () => {
         
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 md:gap-6 relative z-10">
           {stats.map((stat, index) => {
-            const Icon = stat.icon;
+            const Icon = stat.icon || Users; // Fallback if icon is missing
             return (
               <motion.div
                 key={index}
@@ -866,7 +772,7 @@ const AboutPage = () => {
 
         <div className="grid gap-4 md:gap-6 sm:grid-cols-2 lg:grid-cols-3 relative z-10">
           {values.map((value, index) => {
-            const Icon = value.icon;
+            const Icon = value.icon || Heart; // Fallback to Heart if icon is missing
             const cardStyles = [
               'rounded-2xl border-2 border-blue-200/60 bg-gradient-to-br from-blue-50/90 to-white p-6 sm:p-7 md:p-9 shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105 hover:-translate-y-1 h-full group',
               'rounded-3xl border-2 border-emerald-200/60 bg-gradient-to-br from-emerald-50/80 via-white to-emerald-50/60 p-6 sm:p-7 md:p-9 shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105 hover:-translate-y-1 h-full group',
@@ -994,7 +900,7 @@ const AboutPage = () => {
               badge: 'IVC'
             },
           ].map((program, index) => {
-            const Icon = program.icon;
+            const Icon = program.icon || GraduationCap; // Fallback if icon is missing
             return (
               <motion.div
                 key={index}
@@ -1192,7 +1098,7 @@ const AboutPage = () => {
               highlights: ['Well-furnished and spacious rooms', 'Common areas for recreation and study', 'Dining facilities with nutritious meals', '24/7 security and house parent supervision']
             },
           ].map((facility, index) => {
-            const Icon = facility.icon;
+            const Icon = facility.icon || Building2; // Fallback if icon is missing
             const iconShapes = ['rounded-full', 'rounded-xl', 'rounded-lg', 'rounded-full', 'rounded-2xl', 'rounded-lg'];
             return (
               <motion.div
@@ -1211,9 +1117,8 @@ const AboutPage = () => {
                 style={{ transformStyle: 'preserve-3d' }}
               >
                 <div 
-                  className={`relative bg-gradient-to-br ${facility.bg} border-2 ${facility.border} ${facility.shape} overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 h-full transform-gpu cursor-pointer`}
+                  className={`relative bg-gradient-to-br ${facility.bg} border-2 ${facility.border} ${facility.shape} overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 h-full transform-gpu`}
                   style={{ transformStyle: 'preserve-3d' }}
-                  onClick={() => setSelectedFacility(facility)}
                 >
                   {/* Animated background glow */}
                   <motion.div 
@@ -1229,247 +1134,59 @@ const AboutPage = () => {
                     }}
                   />
                   
-                  {/* Image container with parallax effect */}
-                  <div className="relative h-40 sm:h-48 md:h-56 overflow-hidden">
+                  {/* Image container */}
+                  <div className="relative h-48 overflow-hidden">
                     <motion.img 
                       src={facility.image}
                       alt={facility.title}
                       className="w-full h-full object-cover"
                       whileHover={{ 
-                        scale: 1.15,
-                        transition: { duration: 0.6 }
-                      }}
-                    />
-                    
-                    {/* Animated overlay gradient */}
-                    <motion.div 
-                      className="absolute inset-0 bg-gradient-to-t from-slate-900/70 via-slate-900/30 to-transparent"
-                      initial={{ opacity: 1 }}
-                      whileHover={{ opacity: 0.5 }}
-                      transition={{ duration: 0.3 }}
-                    />
-                    
-                    {/* Floating icon with 3D effect */}
-                    <motion.div 
-                      className={`absolute top-2 right-2 sm:top-4 sm:right-4 w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 ${iconShapes[index % iconShapes.length]} bg-gradient-to-br ${facility.gradient} flex items-center justify-center shadow-2xl ring-2 sm:ring-4 ring-white/60 backdrop-blur-sm`}
-                      whileHover={{ 
-                        scale: 1.2,
-                        rotate: [0, -10, 10, -10, 0],
+                        scale: 1.1,
                         transition: { duration: 0.5 }
                       }}
-                      animate={{
-                        y: [0, -5, 0],
-                      }}
-                      transition={{
-                        y: {
-                          duration: 2,
-                          repeat: Infinity,
-                          ease: "easeInOut"
-                        }
-                      }}
-                    >
-                      <Icon className={`${index % 2 === 0 ? 'w-5 h-5 sm:w-6 sm:h-6' : 'w-6 h-6 sm:w-7 sm:h-7'} text-white`} />
-                    </motion.div>
-                    
-                    {/* Shimmer effect on hover */}
-                    <motion.div
-                      className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
-                      initial={{ x: '-100%' }}
-                      whileHover={{ x: '200%' }}
-                      transition={{ duration: 0.8, ease: "easeInOut" }}
                     />
+                    
+                    {/* Overlay gradient */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-slate-900/20 to-transparent"></div>
+                    
+                    {/* Icon badge - top right */}
+                    <div 
+                      className={`absolute top-3 right-3 w-12 h-12 ${iconShapes[index % iconShapes.length]} bg-gradient-to-br ${facility.gradient} flex items-center justify-center shadow-xl ring-2 ring-white/60`}
+                    >
+                      <Icon className="w-6 h-6 text-white" />
                     </div>
-                  
-                  {/* Content section */}
-                  <div className="relative p-4 sm:p-5 md:p-6 lg:p-8 z-10">
-                    <motion.h3 
-                      className="text-base sm:text-lg md:text-xl font-bold text-slate-900 mb-2 md:mb-3 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-slate-900 group-hover:via-blue-600 group-hover:to-slate-900 transition-all duration-300"
-                      whileHover={{ scale: 1.05 }}
-                    >
-                      {facility.title}
-                    </motion.h3>
-                    
-                    <motion.p 
-                      className="text-xs sm:text-sm md:text-base text-slate-700 leading-relaxed mb-3"
-                      initial={{ opacity: 1 }}
-                      whileHover={{ opacity: 0.8 }}
-                    >
-                      {facility.description}
-                    </motion.p>
-                    
-                    {/* Features list that appears on hover */}
-                    <motion.div
-                      initial={{ opacity: 0, height: 0 }}
-                      whileHover={{ opacity: 1, height: 'auto' }}
-                      transition={{ duration: 0.3 }}
-                      className="overflow-hidden"
-                    >
-                      <div className="flex flex-wrap gap-1.5 sm:gap-2 mt-3">
-                        {facility.features.map((feature, idx) => (
-                          <motion.span
-                            key={idx}
-                            initial={{ opacity: 0, x: -10 }}
-                            whileHover={{ opacity: 1, x: 0, scale: 1.1 }}
-                            transition={{ delay: idx * 0.1 }}
-                            className={`px-2.5 py-1 sm:px-3 sm:py-1 rounded-full text-xs font-semibold bg-gradient-to-r ${facility.gradient} text-white shadow-md`}
-                          >
-                            {feature}
-                          </motion.span>
-                        ))}
-                      </div>
-                    </motion.div>
-                    
-                    {/* Decorative corner accent */}
-                    <motion.div
-                      className={`absolute bottom-0 right-0 w-20 h-20 bg-gradient-to-tl ${facility.gradient} opacity-0 group-hover:opacity-10 rounded-tl-full transition-opacity duration-500`}
-                      whileHover={{ scale: 1.5 }}
-                    />
                   </div>
                   
-                  {/* Pulsing border glow effect */}
-                  <motion.div
-                    className={`absolute inset-0 ${facility.shape} pointer-events-none`}
-                    animate={{
-                      boxShadow: [
-                        `0 0 0px 0px rgba(59, 130, 246, 0)`,
-                        `0 0 25px 2px ${facility.gradient.includes('blue') ? 'rgba(59, 130, 246, 0.4)' : facility.gradient.includes('emerald') ? 'rgba(16, 185, 129, 0.4)' : facility.gradient.includes('purple') ? 'rgba(168, 85, 247, 0.4)' : facility.gradient.includes('amber') ? 'rgba(245, 158, 11, 0.4)' : facility.gradient.includes('rose') ? 'rgba(244, 63, 94, 0.4)' : 'rgba(99, 102, 241, 0.4)'}`,
-                        `0 0 0px 0px rgba(59, 130, 246, 0)`,
-                      ],
-                    }}
-                    transition={{
-                      duration: 2.5,
-                      repeat: Infinity,
-                      ease: "easeInOut"
-                    }}
-                    style={{ opacity: 0 }}
-                    whileHover={{ opacity: 1 }}
-                  />
+                  {/* Content section */}
+                  <div className="relative p-5 z-10 flex flex-col flex-1">
+                    {/* Title */}
+                    <h3 className="text-lg font-bold text-slate-900 mb-2">
+                      {facility.title}
+                    </h3>
+                    
+                    {/* Description */}
+                    <p className="text-sm text-slate-700 leading-relaxed mb-4 flex-1">
+                      {facility.description}
+                    </p>
+                    
+                    {/* Features badges - always visible */}
+                    <div className="flex flex-wrap gap-2 mt-auto">
+                      {facility.features.map((feature, idx) => (
+                        <span
+                          key={idx}
+                          className={`px-3 py-1.5 rounded-full text-xs font-semibold bg-gradient-to-r ${facility.gradient} text-white shadow-md`}
+                        >
+                          {feature}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
                 </div>
               </motion.div>
             );
           })}
         </div>
       </section>
-
-      {/* Facility Detail Modal */}
-      {selectedFacility && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          className="fixed inset-0 z-[99999] flex items-center justify-center p-2 sm:p-4 bg-black/60 backdrop-blur-sm"
-          onClick={() => setSelectedFacility(null)}
-          onWheel={(e) => e.stopPropagation()}
-          onTouchMove={(e) => e.stopPropagation()}
-          style={{ 
-            position: 'fixed', 
-            top: 0, 
-            left: 0, 
-            right: 0, 
-            bottom: 0,
-            overflow: 'hidden',
-            pointerEvents: 'auto'
-          }}
-        >
-          <motion.div
-            data-modal-content
-            initial={{ opacity: 0, scale: 0.9, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.9, y: 20 }}
-            transition={{ type: "spring", stiffness: 300, damping: 30 }}
-            className="relative max-w-4xl w-full mx-2 sm:mx-4 bg-white rounded-2xl sm:rounded-3xl shadow-2xl my-auto scrollbar-hide"
-            onClick={(e) => e.stopPropagation()}
-            onWheel={(e) => {
-              // Allow scrolling within modal, prevent propagation to background
-              e.stopPropagation();
-            }}
-            onScroll={(e) => {
-              // Prevent scroll event from bubbling to document
-              e.stopPropagation();
-            }}
-            onTouchStart={(e) => {
-              e.stopPropagation();
-            }}
-            onTouchMove={(e) => {
-              // Allow touch scrolling within modal
-              e.stopPropagation();
-            }}
-            style={{ 
-              maxHeight: '90vh',
-              overflowY: 'auto',
-              overflowX: 'hidden',
-              WebkitOverflowScrolling: 'touch',
-              overscrollBehavior: 'contain',
-              pointerEvents: 'auto',
-              touchAction: 'pan-y'
-            }}
-          >
-            {/* Close button */}
-            <button
-              onClick={() => setSelectedFacility(null)}
-              className="absolute top-2 right-2 sm:top-4 sm:right-4 z-50 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white/90 backdrop-blur-sm border-2 border-slate-200 flex items-center justify-center shadow-lg hover:bg-white hover:scale-110 transition-all duration-200"
-            >
-              <X className="w-4 h-4 sm:w-5 sm:h-5 text-slate-700" />
-            </button>
-
-            {/* Hero image */}
-            <div className="relative h-48 sm:h-64 md:h-80 overflow-hidden">
-              <img 
-                src={selectedFacility.image}
-                alt={selectedFacility.title}
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/40 to-transparent"></div>
-              <div className={`absolute top-3 left-3 sm:top-6 sm:left-6 w-12 h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl bg-gradient-to-br ${selectedFacility.gradient} flex items-center justify-center shadow-2xl ring-2 sm:ring-4 ring-white/60`}>
-                {React.createElement(selectedFacility.icon, { className: "w-6 h-6 sm:w-8 sm:h-8 text-white" })}
-              </div>
-              <div className="absolute bottom-3 left-3 right-3 sm:bottom-6 sm:left-6 sm:right-6">
-                <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-1 sm:mb-2 drop-shadow-lg">
-                  {selectedFacility.title}
-                </h2>
-              </div>
-            </div>
-
-            {/* Content */}
-            <div className="p-4 sm:p-6 md:p-8">
-              <p className="text-base sm:text-lg text-slate-700 leading-relaxed mb-4 sm:mb-6">
-                {selectedFacility.details}
-              </p>
-
-              {/* Highlights */}
-              <div className="mb-4 sm:mb-6">
-                <h3 className="text-lg sm:text-xl font-bold text-slate-900 mb-3 sm:mb-4">Key Highlights</h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
-                  {selectedFacility.highlights.map((highlight, idx) => (
-                    <motion.div
-                      key={idx}
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: idx * 0.1 }}
-                      className="flex items-start gap-2 sm:gap-3 p-3 sm:p-4 rounded-lg sm:rounded-xl bg-gradient-to-br from-slate-50 to-white border border-slate-200"
-                    >
-                      <CheckCircle className={`w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0 mt-0.5 ${selectedFacility.gradient.includes('blue') ? 'text-blue-500' : selectedFacility.gradient.includes('emerald') ? 'text-emerald-500' : selectedFacility.gradient.includes('purple') ? 'text-purple-500' : selectedFacility.gradient.includes('amber') ? 'text-amber-500' : selectedFacility.gradient.includes('rose') ? 'text-rose-500' : 'text-indigo-500'}`} />
-                      <p className="text-sm sm:text-base text-slate-700">{highlight}</p>
-                    </motion.div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Features badges */}
-              <div className="flex flex-wrap gap-2">
-                {selectedFacility.features.map((feature, idx) => (
-                  <span
-                    key={idx}
-                    className={`px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-semibold bg-gradient-to-r ${selectedFacility.gradient} text-white shadow-md`}
-                  >
-                    {feature}
-                  </span>
-                ))}
-              </div>
-            </div>
-          </motion.div>
-        </motion.div>
-      )}
 
       {/* Section Divider */}
       <div className="mx-auto max-w-7xl px-4 sm:px-6 py-2">
@@ -1590,7 +1307,7 @@ const AboutPage = () => {
               image: 'https://images.unsplash.com/photo-1532094349884-543bc11b234d?q=70&w=600&auto=format&fit=crop'
             },
           ].map((activity, index) => {
-            const Icon = activity.icon;
+            const Icon = activity.icon || Palette; // Fallback if icon is missing
             return (
               <motion.div
                 key={index}
@@ -1671,7 +1388,7 @@ const AboutPage = () => {
               { icon: Heart, title: 'Support Staff', value: '30+', description: 'Caring staff for student welfare', gradient: 'from-orange-500 to-amber-600', color: 'orange' },
               { icon: Shield, title: 'Counselors', value: '5+', description: 'Professional guidance counselors', gradient: 'from-pink-500 to-rose-600', color: 'pink' },
             ].map((team, index) => {
-              const Icon = team.icon;
+              const Icon = team.icon || Users; // Fallback if icon is missing
               return (
                 <React.Fragment key={index}>
                   <motion.div
@@ -1765,7 +1482,7 @@ const AboutPage = () => {
               { icon: Heart, title: 'Support Staff', value: '30+', description: 'Caring staff for student welfare', gradient: 'from-orange-500 to-amber-600', color: 'orange' },
               { icon: Shield, title: 'Counselors', value: '5+', description: 'Professional guidance counselors', gradient: 'from-pink-500 to-rose-600', color: 'pink' },
             ].map((team, index) => {
-              const Icon = team.icon;
+              const Icon = team.icon || Users; // Fallback if icon is missing
               return (
                 <motion.div
                   key={index}
@@ -1838,9 +1555,9 @@ const AboutPage = () => {
               gradient: 'from-amber-500 to-yellow-500'
             },
           ].map((affiliation, index) => {
-            const Icon = affiliation.icon;
+            const Icon = affiliation.icon || Award; // Fallback if icon is missing
             return (
-              <React.Fragment key={index}>
+                <React.Fragment key={index}>
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -1904,7 +1621,7 @@ const AboutPage = () => {
               { name: 'Research Partner', icon: Lightbulb, gradient: 'from-teal-500 to-cyan-500' },
               { name: 'Global Partner', icon: Globe, gradient: 'from-amber-500 to-yellow-500' },
             ].map((partner, index) => {
-              const Icon = partner.icon;
+              const Icon = partner.icon || Handshake; // Fallback if icon is missing
               return (
                 <div
                   key={index}
@@ -1931,7 +1648,7 @@ const AboutPage = () => {
               { name: 'Research Partner', icon: Lightbulb, gradient: 'from-teal-500 to-cyan-500' },
               { name: 'Global Partner', icon: Globe, gradient: 'from-amber-500 to-yellow-500' },
             ].map((partner, index) => {
-              const Icon = partner.icon;
+              const Icon = partner.icon || Handshake; // Fallback if icon is missing
               return (
                 <div
                   key={`duplicate-${index}`}
@@ -2234,3 +1951,4 @@ const AboutPage = () => {
 };
 
 export default AboutPage;
+

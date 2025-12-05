@@ -89,7 +89,7 @@ const GalleryPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-100 via-slate-50 to-slate-100 relative overflow-hidden">
+    <main className="min-h-screen bg-gradient-to-b from-slate-100 via-slate-50 to-slate-100 relative overflow-hidden">
       {/* Animated background */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-200/40 rounded-full blur-3xl animate-pulse" />
@@ -98,19 +98,19 @@ const GalleryPage = () => {
       </div>
 
       {/* Hero Section */}
-      <section className="relative pt-32 pb-20 md:pt-40 md:pb-28 z-10">
+      <header className="relative pt-24 pb-12 md:pt-32 md:pb-16 z-10">
         <div className="mx-auto max-w-7xl px-6">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-center mb-16"
+            className="text-center mb-8"
           >
             <motion.div
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="inline-flex items-center gap-2 rounded-full bg-white/80 backdrop-blur-sm border border-blue-200/50 px-4 py-2 text-sm font-medium text-blue-700 shadow-sm mb-6"
+              className="inline-flex items-center gap-2 rounded-full bg-white/80 backdrop-blur-sm border border-blue-200/50 px-4 py-2 text-sm font-medium text-blue-700 shadow-sm mb-4"
             >
               <Camera className="w-4 h-4" />
               Photo Gallery
@@ -120,7 +120,7 @@ const GalleryPage = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
-              className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-extrabold mb-6"
+              className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-extrabold mb-4"
             >
               <span className="bg-gradient-to-r from-blue-600 via-sky-600 to-blue-600 bg-clip-text text-transparent">
                 Our Gallery
@@ -137,22 +137,22 @@ const GalleryPage = () => {
             </motion.p>
           </motion.div>
         </div>
-      </section>
+      </header>
 
       {/* Morphing Card Stack Gallery */}
-      <section className="relative py-16 md:py-24 z-10">
+      <section className="relative py-8 md:py-12 z-10">
         <div className="mx-auto max-w-7xl px-6">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="mb-12"
+            className="mb-8"
           >
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 mb-4 text-center">
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 mb-3 text-center">
               Explore Our <span className="bg-gradient-to-r from-blue-600 to-sky-600 bg-clip-text text-transparent">Collections</span>
             </h2>
-            <p className="text-xl text-slate-600 max-w-2xl mx-auto text-center">
+            <p className="text-lg md:text-xl text-slate-600 max-w-2xl mx-auto text-center">
               Switch between stack, grid, and list views to browse our gallery
             </p>
           </motion.div>
@@ -167,14 +167,14 @@ const GalleryPage = () => {
       </section>
 
       {/* Additional Info Section */}
-      <section className="relative py-16 md:py-24 z-10">
-        <div className="mx-auto max-w-7xl px-6">
+      <section className="relative py-8 md:py-12 z-10">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="grid md:grid-cols-3 gap-6"
+            className="grid md:grid-cols-3 gap-4 md:gap-6"
           >
             {[
               {
@@ -211,7 +211,7 @@ const GalleryPage = () => {
           </motion.div>
         </div>
       </section>
-    </div>
+    </main>
   );
 };
 

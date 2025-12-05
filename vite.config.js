@@ -44,8 +44,6 @@ export default defineConfig({
     },
     chunkSizeWarningLimit: 1000,
     // Enable source maps only in dev
-    sourcemap: false,
-    // Optimize chunk loading
-    chunkSizeWarningLimit: 600,
+    
   }
 })

@@ -298,7 +298,7 @@ export default function Gallery({ images = [] }) {
                     <div className="absolute inset-0 bg-gradient-to-br from-slate-200 via-slate-100 to-slate-200 animate-pulse pointer-events-none" />
                   )}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent">
-                    <div className="absolute bottom-16 left-0 right-0 p-4 text-white">
+                    <div className="absolute bottom-7 left-0 right-0 p-4 text-white">
                       {displayImages[carouselIndex].title && (
                         <h3 className="text-lg font-bold mb-1">{displayImages[carouselIndex].title}</h3>
                       )}

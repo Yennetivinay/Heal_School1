@@ -320,9 +320,9 @@ const AboutPage = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.3 }}
-          className="space-y-4"
+          className="space-y-3"
         >
-          <div className="flex items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
+          <div className="flex items-center gap-3 sm:gap-4 mb-2 sm:mb-3">
             <motion.div
               whileHover={{ scale: 1.1, rotate: 5 }}
               className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-xl sm:rounded-2xl bg-gradient-to-br from-blue-500 to-sky-500 flex items-center justify-center shadow-xl flex-shrink-0"
@@ -338,7 +338,7 @@ const AboutPage = () => {
             Heal Paradise School was established with a vision to provide free, quality education to underprivileged children.
             Our journey began with a simple yet powerful mission: to break the cycle of poverty through education.
           </p>
-          <div className="flex flex-wrap gap-2 pt-2">
+          <div className="flex flex-wrap gap-2 pt-1">
             <span className="px-2.5 py-1 rounded-full bg-blue-100 text-blue-700 text-xs font-semibold">Vision</span>
             <span className="px-2.5 py-1 rounded-full bg-sky-100 text-sky-700 text-xs font-semibold">Mission</span>
         </div>
@@ -354,9 +354,9 @@ const AboutPage = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.3 }}
-          className="space-y-4"
+          className="space-y-3"
         >
-          <div className="flex items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
+          <div className="flex items-center gap-3 sm:gap-4 mb-2 sm:mb-3">
             <motion.div
               whileHover={{ scale: 1.1, rotate: 5 }}
               className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-xl sm:rounded-2xl bg-gradient-to-br from-emerald-500 to-green-500 flex items-center justify-center shadow-xl flex-shrink-0"
@@ -372,7 +372,7 @@ const AboutPage = () => {
             Successfully obtained CBSE affiliation, ensuring our students receive recognized, high-quality education.
             This milestone validated our commitment to academic excellence and opened doors to better opportunities.
           </p>
-          <div className="flex flex-wrap gap-2 pt-2">
+          <div className="flex flex-wrap gap-2 pt-1">
             <span className="px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-700 text-xs font-semibold">CBSE</span>
             <span className="px-2.5 py-1 rounded-full bg-green-100 text-green-700 text-xs font-semibold">Quality</span>
         </div>
@@ -388,9 +388,9 @@ const AboutPage = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.3 }}
-          className="space-y-4"
+          className="space-y-3"
         >
-          <div className="flex items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
+          <div className="flex items-center gap-3 sm:gap-4 mb-2 sm:mb-3">
             <motion.div
               whileHover={{ scale: 1.1, rotate: 5 }}
               className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-xl sm:rounded-2xl bg-gradient-to-br from-amber-500 to-yellow-500 flex items-center justify-center shadow-xl flex-shrink-0"
@@ -406,7 +406,7 @@ const AboutPage = () => {
             Expanded facilities to accommodate more students, adding new classrooms, state-of-the-art labs, 
             and enhanced residential facilities. Our growth reflected the increasing trust and impact in the community.
           </p>
-          <div className="flex flex-wrap gap-2 pt-2">
+          <div className="flex flex-wrap gap-2 pt-1">
             <span className="px-2.5 py-1 rounded-full bg-amber-100 text-amber-700 text-xs font-semibold">Growth</span>
             <span className="px-2.5 py-1 rounded-full bg-yellow-100 text-yellow-700 text-xs font-semibold">Facilities</span>
         </div>
@@ -422,9 +422,9 @@ const AboutPage = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.3 }}
-          className="space-y-4"
+          className="space-y-3"
         >
-          <div className="flex items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
+          <div className="flex items-center gap-3 sm:gap-4 mb-2 sm:mb-3">
             <motion.div
               whileHover={{ scale: 1.1, rotate: 5 }}
               className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-xl sm:rounded-2xl bg-gradient-to-br from-purple-500 to-violet-500 flex items-center justify-center shadow-xl flex-shrink-0"
@@ -440,7 +440,7 @@ const AboutPage = () => {
             Received multiple awards for excellence in education and social impact, gaining national recognition.
             Our dedication to transforming lives through education was celebrated and acknowledged at the highest levels.
           </p>
-          <div className="flex flex-wrap gap-2 pt-2">
+          <div className="flex flex-wrap gap-2 pt-1">
             <span className="px-2.5 py-1 rounded-full bg-purple-100 text-purple-700 text-xs font-semibold">Awards</span>
             <span className="px-2.5 py-1 rounded-full bg-violet-100 text-violet-700 text-xs font-semibold">Excellence</span>
         </div>
@@ -456,9 +456,9 @@ const AboutPage = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.3 }}
-          className="space-y-4"
+          className="space-y-3"
         >
-          <div className="flex items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
+          <div className="flex items-center gap-3 sm:gap-4 mb-2 sm:mb-3">
             <motion.div
               whileHover={{ scale: 1.1, rotate: 5 }}
               className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-xl sm:rounded-2xl bg-gradient-to-br from-rose-500 to-pink-500 flex items-center justify-center shadow-xl flex-shrink-0"
@@ -474,7 +474,7 @@ const AboutPage = () => {
             Reached a milestone of 500+ students, transforming lives through education and compassionate care.
             Each student represents a story of hope, resilience, and the power of education to change destinies.
           </p>
-          <div className="flex flex-wrap gap-2 pt-2">
+          <div className="flex flex-wrap gap-2 pt-1">
             <span className="px-2.5 py-1 rounded-full bg-rose-100 text-rose-700 text-xs font-semibold">500+</span>
             <span className="px-2.5 py-1 rounded-full bg-pink-100 text-pink-700 text-xs font-semibold">Impact</span>
         </div>
@@ -524,9 +524,9 @@ const AboutPage = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-50 via-white to-blue-50/30 relative z-0 overflow-x-hidden">
+    <main className="min-h-screen bg-gradient-to-b from-slate-50 via-white to-blue-50/30 relative z-0 overflow-x-hidden">
       {/* Hero Section */}
-      <section className="relative overflow-hidden pt-28 pb-8 md:pt-28 md:pb-12 z-10 px-4 sm:px-6">
+      <header className="relative overflow-hidden pt-24 pb-6 md:pt-28 md:pb-8 z-10 px-4 sm:px-6">
         {/* Enhanced background with multiple layers */}
         <div className="absolute inset-0 bg-gradient-to-br from-blue-50/80 via-white to-sky-50/60" />
         <div className="absolute top-0 right-0 w-72 h-72 md:w-[500px] md:h-[500px] bg-gradient-to-br from-blue-200/40 to-sky-200/40 rounded-full blur-3xl -mr-32 md:-mr-64 -mt-32 md:-mt-64 animate-pulse" />
@@ -540,7 +540,7 @@ const AboutPage = () => {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               transition={{ duration: 0.4, type: "spring", stiffness: 200 }}
               viewport={{ once: true, margin: "-100px" }}
-              className="inline-flex items-center gap-2 rounded-full bg-white/90 backdrop-blur-md border border-blue-200/60 px-4 py-2 md:px-5 md:py-2.5 text-sm md:text-base font-semibold text-blue-700 shadow-lg mb-6 md:mb-8 hover:shadow-xl transition-shadow duration-300"
+              className="inline-flex items-center gap-2 rounded-full bg-white/90 backdrop-blur-md border border-blue-200/60 px-4 py-2 md:px-5 md:py-2.5 text-sm md:text-base font-semibold text-blue-700 shadow-lg mb-4 md:mb-6 hover:shadow-xl transition-shadow duration-300"
             >
               <Sparkles className="w-4 h-4 md:w-5 md:h-5" />
               About Heal Paradise School
@@ -551,7 +551,7 @@ const AboutPage = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.05, type: "spring", stiffness: 200 }}
               viewport={{ once: true, margin: "-100px" }}
-              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-extrabold mb-5 md:mb-6 px-2 leading-tight"
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-extrabold mb-4 md:mb-5 px-2 leading-tight"
             >
               <span className="bg-gradient-to-r from-blue-600 via-sky-600 to-blue-600 bg-clip-text text-transparent drop-shadow-sm">
                 Transforming Lives
@@ -573,17 +573,17 @@ const AboutPage = () => {
             </motion.p>
           </div>
         </div>
-      </section>
+      </header>
 
       {/* Statistics Section */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 py-6 md:py-10 relative">
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 py-4 md:py-6 relative">
         {/* Subtle background decoration */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute top-1/2 left-0 w-64 h-64 bg-gradient-to-r from-blue-100/20 to-transparent rounded-full blur-3xl"></div>
           <div className="absolute top-1/2 right-0 w-64 h-64 bg-gradient-to-l from-sky-100/20 to-transparent rounded-full blur-3xl"></div>
         </div>
         
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 md:gap-8 relative z-10">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 md:gap-6 relative z-10">
           {stats.map((stat, index) => {
             const Icon = stat.icon;
             return (
@@ -636,7 +636,7 @@ const AboutPage = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-150px" }}
           transition={{ duration: 0.15, ease: "easeOut" }}
-          className="text-center mb-6 sm:mb-8 md:mb-12 relative z-10"
+          className="text-center mb-4 sm:mb-6 md:mb-8 relative z-10"
         >
           <div className="inline-flex items-center gap-2 rounded-full bg-white/90 backdrop-blur-sm border border-blue-200/60 px-3 py-1.5 sm:px-4 sm:py-2 text-xs sm:text-sm font-semibold text-blue-700 shadow-sm mb-3 sm:mb-4">
             <Target className="w-3 h-3 sm:w-4 sm:h-4" />
@@ -647,7 +647,7 @@ const AboutPage = () => {
           </h2>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 md:gap-8 lg:gap-12 relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 md:gap-8 relative z-10">
           {/* Mission Card */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -718,14 +718,14 @@ const AboutPage = () => {
       </div>
 
       {/* Our Story Section */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 py-6 md:py-12 relative">
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 py-4 md:py-8 relative">
         {/* Background decoration */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none rounded-3xl">
           <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-blue-100/20 to-sky-100/20 rounded-full blur-3xl -mr-48 -mt-48"></div>
           <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-sky-100/20 to-blue-100/20 rounded-full blur-3xl -ml-48 -mb-48"></div>
         </div>
         
-        <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-stretch relative z-10">
+        <div className="grid md:grid-cols-2 gap-6 md:gap-8 items-stretch relative z-10">
           <motion.div
             initial={{ opacity: 0, x: -40 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -838,7 +838,7 @@ const AboutPage = () => {
       </div>
 
       {/* Core Values Section */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 py-6 md:py-12 relative">
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 py-4 md:py-8 relative">
         {/* Background decoration */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none rounded-3xl">
           <div className="absolute top-0 left-1/4 w-96 h-96 bg-gradient-to-br from-purple-100/15 to-pink-100/15 rounded-full blur-3xl"></div>
@@ -850,7 +850,7 @@ const AboutPage = () => {
           whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.3 }}
-          className="text-center mb-6 md:mb-10 relative z-10"
+          className="text-center mb-4 md:mb-6 relative z-10"
         >
           <div className="inline-flex items-center gap-2 rounded-full bg-white/90 backdrop-blur-sm border border-purple-200/60 px-4 py-2 text-sm font-semibold text-purple-700 shadow-sm mb-4">
             <Heart className="w-4 h-4" />
@@ -864,7 +864,7 @@ const AboutPage = () => {
           </p>
         </motion.div>
 
-        <div className="grid gap-6 md:gap-8 sm:grid-cols-2 lg:grid-cols-3 relative z-10">
+        <div className="grid gap-4 md:gap-6 sm:grid-cols-2 lg:grid-cols-3 relative z-10">
           {values.map((value, index) => {
             const Icon = value.icon;
             const cardStyles = [
@@ -908,17 +908,17 @@ const AboutPage = () => {
       </div>
 
       {/* Timeline Section */}
-      <section className="mx-auto max-w-7xl px-2 sm:px-4 md:px-6 py-6 sm:py-8 md:py-12 relative">
+      <section className="mx-auto max-w-7xl px-2 sm:px-4 md:px-6 py-4 sm:py-6 md:py-8 relative">
         <Timeline data={timelineData} />
       </section>
 
       {/* Section Divider */}
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 py-2">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 py-1">
         <div className="h-px bg-gradient-to-r from-transparent via-blue-200 to-transparent"></div>
       </div>
 
       {/* Academic Programs Section */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 py-6 md:py-12 relative">
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 py-4 md:py-8 relative">
         {/* Background decorative elements */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none rounded-3xl">
           <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-blue-200/20 to-sky-200/20 rounded-full blur-3xl -mr-48 -mt-48"></div>
@@ -930,7 +930,7 @@ const AboutPage = () => {
           whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.3 }}
-          className="text-center mb-6 md:mb-10 relative z-10"
+          className="text-center mb-4 md:mb-6 relative z-10"
         >
           <div className="inline-flex items-center gap-2 rounded-full bg-white/80 backdrop-blur-sm border border-blue-200/50 px-4 py-2 text-sm font-medium text-blue-700 shadow-sm mb-4">
             <BookOpen className="w-4 h-4" />
@@ -946,7 +946,7 @@ const AboutPage = () => {
           </p>
         </motion.div>
 
-        <div className="grid gap-6 md:gap-8 sm:grid-cols-2 lg:grid-cols-3 relative z-10">
+        <div className="grid gap-4 md:gap-6 sm:grid-cols-2 lg:grid-cols-3 relative z-10">
           {[
             { 
               title: 'CBSE Curriculum', 
@@ -1489,7 +1489,7 @@ const AboutPage = () => {
           whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.3 }}
-          className="text-center mb-6 md:mb-10 relative z-10"
+          className="text-center mb-4 md:mb-6 relative z-10"
         >
           <div className="inline-flex items-center gap-2 rounded-full bg-white/80 backdrop-blur-sm border border-blue-200/50 px-4 py-2 text-sm font-medium text-blue-700 shadow-sm mb-4">
             <Sparkles className="w-4 h-4" />
@@ -1640,7 +1640,7 @@ const AboutPage = () => {
       </div>
 
       {/* Faculty & Staff Section */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 py-8 md:py-16 relative overflow-hidden">
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 py-4 md:py-8 relative overflow-hidden">
         {/* Animated background elements */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute top-0 left-1/4 w-96 h-96 bg-gradient-to-br from-blue-200/20 to-sky-200/20 rounded-full blur-3xl animate-pulse"></div>
@@ -1664,7 +1664,7 @@ const AboutPage = () => {
 
         <div className="relative z-10">
           {/* Desktop: Horizontal layout with dividers */}
-          <div className="hidden md:flex items-center justify-between gap-4 lg:gap-8">
+          <div className="hidden md:flex items-center justify-between gap-3 lg:gap-6">
             {[
               { icon: UserCheck, title: 'Qualified Teachers', value: '50+', description: 'Certified and experienced educators', gradient: 'from-indigo-500 to-purple-600', color: 'indigo' },
               { icon: GraduationCap, title: 'Subject Experts', value: '15+', description: 'Specialized faculty for each subject', gradient: 'from-teal-500 to-cyan-600', color: 'teal' },
@@ -1804,13 +1804,13 @@ const AboutPage = () => {
       </div>
 
       {/* Accreditation & Affiliations Section */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 py-6 md:py-12 relative">
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 py-4 md:py-8 relative">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.3 }}
-          className="text-center mb-8 md:mb-12"
+          className="text-center mb-4 md:mb-6"
         >
           <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900 mb-3 md:mb-4 px-2">
             <span className="bg-gradient-to-r from-blue-600 to-sky-600 bg-clip-text text-transparent">Accreditation</span> & Affiliations
@@ -1876,7 +1876,7 @@ const AboutPage = () => {
           whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.3 }}
-          className="text-center mb-8 md:mb-12"
+          className="text-center mb-4 md:mb-6"
         >
           <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900 mb-3 md:mb-4 px-2">
             <span className="bg-gradient-to-r from-blue-600 to-sky-600 bg-clip-text text-transparent">Partnerships</span> & Collaborations
@@ -2089,14 +2089,14 @@ const AboutPage = () => {
                 <div className="absolute inset-0 bg-slate-200/40 rounded-full opacity-0 active:opacity-100 transition-opacity duration-150"></div>
               </motion.a>
             </motion.div>
-            </div>
+          </div>
         </motion.div>
       </section>
 
       {/* Section Divider */}
       <div className="mx-auto max-w-7xl px-4 sm:px-6 py-2">
         <div className="h-px bg-gradient-to-r from-transparent via-orange-200 to-transparent"></div>
-          </div>
+    </div>
 
       {/* Contact Information Section */}
       <section className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 py-4 sm:py-6 md:py-12 relative">
@@ -2111,7 +2111,7 @@ const AboutPage = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.3 }}
-          className="text-center mb-6 sm:mb-8 md:mb-12 relative z-10"
+          className="text-center mb-4 sm:mb-6 md:mb-8 relative z-10"
         >
           <div className="inline-flex items-center gap-2 rounded-full bg-white/90 backdrop-blur-sm border border-blue-200/60 px-3 py-1.5 sm:px-4 sm:py-2 text-xs sm:text-sm font-semibold text-blue-700 shadow-sm mb-3 sm:mb-4">
             <MapPin className="w-3 h-3 sm:w-4 sm:h-4" />
@@ -2229,7 +2229,7 @@ const AboutPage = () => {
           </motion.div>
         </div>
       </section>
-    </div>
+    </main>
   );
 };
 

@@ -197,8 +197,8 @@ const LandingPage = () => {
   }, []);
 
   return (
-    <>
-    <section ref={sectionRef} className="relative overflow-hidden h-screen bg-black">
+    <main>
+    <header ref={sectionRef} className="relative overflow-hidden h-screen bg-black">
       <div ref={videoContainerRef} className="absolute inset-0 h-screen w-full">
         <div className="absolute inset-0 z-0 w-full h-full">
           <LazyVideo
@@ -247,27 +247,27 @@ const LandingPage = () => {
             </a>
           </div>
         </div>
-    </section>
+    </header>
 
     {/* Gallery Section */}
-    <section id="gallery" className="w-full mb-5 pb-10 bg-gradient-to-br from-slate-50 via-white to-blue-50/30 rounded-3xl overflow-hidden relative">
+    <section id="gallery" className="w-full mb-3 pb-6 bg-gradient-to-br from-slate-50 via-white to-blue-50/30 rounded-3xl overflow-hidden relative">
       {/* Decorative background elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-blue-100/20 to-sky-100/20 rounded-full blur-3xl -mr-48 -mt-48"></div>
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-sky-100/20 to-blue-100/20 rounded-full blur-3xl -ml-48 -mb-48"></div>
       </div>
-      
+
       <div className="mx-auto max-w-7xl px-4 sm:px-6 relative z-10">
       {/* Text and Illustration Section */}
       
-      <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-stretch py-8 md:py-12">
+      <div className="grid md:grid-cols-2 gap-6 md:gap-8 items-stretch py-6 md:py-8">
           {/* Text Content */}
           <motion.div 
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.5 }}
-            className="space-y-6 flex flex-col justify-center"
+            className="space-y-4 flex flex-col justify-center"
           >
             <div className="inline-flex items-center gap-2 rounded-full bg-blue-100/80 backdrop-blur-sm border border-blue-200/60 px-4 py-2 text-sm font-semibold text-blue-700 shadow-sm mb-4 w-fit">
               <Heart className="w-4 h-4" />
@@ -283,7 +283,7 @@ const LandingPage = () => {
             <p className="text-base sm:text-lg md:text-xl text-slate-700 leading-relaxed">
               At Heal Paradise School, we believe every child deserves access to world-class education, regardless of their circumstances. Through our comprehensive scholarship program and residential care, we're building a future where every student can dream, achieve, and inspire.
             </p>
-            <div className="flex flex-wrap gap-3 pt-2">
+            <div className="flex flex-wrap gap-2 pt-1">
               {['100% Free Education', 'Residential Care', 'CBSE Curriculum', 'Holistic Development'].map((tag, idx) => (
                 <motion.span
                   key={idx}
@@ -296,7 +296,7 @@ const LandingPage = () => {
                   {tag}
                 </motion.span>
               ))}
-            </div>
+          </div>
           </motion.div>
 
           {/* Illustration/Cartoon */}
@@ -323,7 +323,7 @@ const LandingPage = () => {
       </div>
       
       {/* Gallery Component */}
-      <div className="mx-auto max-w-7xl px-6 pt-8">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 pt-6">
         <Suspense fallback={<div className="flex items-center justify-center py-12"><div className="text-slate-600">Loading gallery...</div></div>}>
           <Gallery />
         </Suspense>
@@ -336,7 +336,7 @@ const LandingPage = () => {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.5 }}
-        className="flex justify-center pt-8"
+        className="flex justify-center pt-6"
       >
         <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
         <Link
@@ -372,7 +372,7 @@ const LandingPage = () => {
 
       {/* Award Cards Section */}
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
-      <div className="mt-12 md:mt-16">
+      <div className="mt-8 md:mt-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -384,15 +384,15 @@ const LandingPage = () => {
             <Trophy className="w-4 h-4" />
             Recognition
           </div>
-          <h3 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-center text-slate-900 mb-3">
-            <span className="bg-gradient-to-r from-amber-600 via-yellow-600 to-amber-600 bg-clip-text text-transparent">
-              Our Achievements
-            </span>
-            <br />
-            <span className="text-slate-900">& Recognition</span>
-          </h3>
+        <h3 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-center text-slate-900 mb-4">
+          <span className="bg-gradient-to-r from-amber-600 via-yellow-600 to-amber-600 bg-clip-text text-transparent">
+            Our Achievements
+          </span>
+          <br />
+          <span className="text-slate-900">& Recognition</span>
+        </h3>
         </motion.div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
           {/* Award Card 1 */}
           <motion.div 
             initial={{ opacity: 0, y: 30 }}
@@ -566,108 +566,212 @@ const LandingPage = () => {
     </section>
 
     {/* Founder Message */}
-    <section className="mx-auto max-w-7xl px-4 sm:px-6 pb-12">
+    <article className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 py-6 sm:py-8 md:py-10 lg:py-12">
       <motion.div 
-        initial={{ opacity: 0, y: 30 }}
+        initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
-        whileHover={{ scale: 1.01 }}
-        className="group relative rounded-3xl overflow-hidden bg-gradient-to-br from-blue-50 via-white to-sky-50 p-8 md:p-10 lg:p-12 shadow-2xl border-2 border-blue-100/60 transition-all duration-500 hover:from-blue-100 hover:via-blue-50 hover:to-sky-100 hover:shadow-3xl hover:border-blue-200/80"
+        viewport={{ once: true, margin: "-50px" }}
+        transition={{ duration: 0.4 }}
+        className="relative bg-gradient-to-br from-white via-blue-50/70 to-sky-50/60 rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-10 lg:p-12 shadow-2xl border-2 border-blue-200/80 overflow-hidden"
       >
-        {/* Decorative background elements */}
+        {/* Enhanced bright background decorations */}
         <motion.div 
-          className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-blue-200/30 to-sky-200/30 rounded-full blur-3xl -mr-48 -mt-48"
-          animate={{ scale: [1, 1.1, 1], opacity: [0.3, 0.5, 0.3] }}
-          transition={{ duration: 6, repeat: Infinity }}
+          className="absolute top-0 right-0 w-72 h-72 sm:w-96 sm:h-96 bg-gradient-to-br from-blue-300/50 to-sky-300/50 rounded-full blur-3xl -mr-36 sm:-mr-48 -mt-36 sm:-mt-48"
+          animate={{ 
+            scale: [1, 1.1, 1],
+            opacity: [0.4, 0.6, 0.4]
+          }}
+          transition={{ duration: 8, repeat: Infinity }}
         ></motion.div>
         <motion.div 
-          className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-sky-200/30 to-blue-200/30 rounded-full blur-3xl -ml-48 -mb-48"
-          animate={{ scale: [1, 1.1, 1], opacity: [0.3, 0.5, 0.3] }}
-          transition={{ duration: 6, repeat: Infinity, delay: 1 }}
+          className="absolute bottom-0 left-0 w-56 h-56 sm:w-80 sm:h-80 bg-gradient-to-tr from-sky-300/50 to-blue-300/50 rounded-full blur-3xl -ml-28 sm:-ml-40 -mb-28 sm:-mb-40"
+          animate={{ 
+            scale: [1, 1.15, 1],
+            opacity: [0.4, 0.6, 0.4]
+          }}
+          transition={{ duration: 10, repeat: Infinity, delay: 1 }}
         ></motion.div>
         
-        <div className="relative z-10 grid md:grid-cols-4 gap-6 md:gap-8 items-center px-4 md:px-6">
+        {/* Brighter grid pattern */}
+        <div className="absolute inset-0 opacity-[0.08] bg-[linear-gradient(to_right,#3b82f6_1px,transparent_1px),linear-gradient(to_bottom,#3b82f6_1px,transparent_1px)] bg-[size:24px_24px]"></div>
+        
+        {/* Brighter decorative corner accents */}
+        <div className="absolute top-0 right-0 w-24 h-24 sm:w-32 sm:h-32 bg-gradient-to-br from-blue-200/70 to-transparent rounded-bl-3xl"></div>
+        <div className="absolute bottom-0 left-0 w-20 h-20 sm:w-28 sm:h-28 bg-gradient-to-tr from-sky-200/70 to-transparent rounded-tr-3xl"></div>
+        
+        <div className="relative z-10 grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5 md:gap-6 items-start md:items-center">
           {/* Left Side - Founder Image and Name */}
           <motion.div 
-            initial={{ opacity: 0, x: -30 }}
+            className="flex flex-col items-center md:items-end text-center md:text-right md:pr-4 lg:pr-6"
+            initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="flex flex-col items-center md:items-start md:col-span-1"
           >
             <motion.div 
-              className="relative group mb-4"
-              whileHover={{ scale: 1.05 }}
+              className="relative mb-5 sm:mb-6"
+              whileHover={{ scale: 1.03 }}
               transition={{ duration: 0.3 }}
             >
+              {/* Enhanced brighter glow effects */}
               <motion.div 
-                className="absolute inset-0 bg-gradient-to-br from-blue-400 to-sky-500 rounded-full blur-xl opacity-30"
-                animate={{ opacity: [0.3, 0.5, 0.3] }}
-                transition={{ duration: 3, repeat: Infinity }}
+                className="absolute inset-0 bg-gradient-to-br from-blue-400/70 to-sky-400/70 rounded-full blur-2xl"
+                animate={{ 
+                  opacity: [0.6, 0.8, 0.6],
+                  scale: [1, 1.1, 1]
+                }}
+                transition={{ duration: 4, repeat: Infinity }}
               ></motion.div>
-              <div className="relative w-40 h-40 md:w-48 md:h-48 rounded-full overflow-hidden shadow-2xl ring-4 ring-blue-100/50">
+              
+              {/* Brighter outer decorative ring */}
+              <div className="absolute inset-0 rounded-full bg-gradient-to-br from-blue-300 via-sky-300 to-blue-300 p-0.5 animate-spin-slow opacity-80">
+                <div className="w-full h-full rounded-full bg-white"></div>
+              </div>
+              
+              <div className="relative w-36 h-36 sm:w-40 sm:h-40 md:w-44 md:h-44 lg:w-48 lg:h-48 rounded-full overflow-hidden ring-4 ring-blue-200/90 ring-offset-2 ring-offset-white shadow-xl">
                 <img
-                  src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=70&w=400&auto=format&fit=crop"
+                  src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=70&w=600&auto=format&fit=crop"
                   alt="Founder"
                   loading="lazy"
                   decoding="async"
                   className="w-full h-full object-cover"
                 />
+                {/* Subtle overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-blue-900/10 via-transparent to-transparent"></div>
               </div>
+              
+              {/* Decorative badge */}
+              <motion.div 
+                className="absolute -top-1 -right-1 sm:-top-2 sm:-right-2 w-6 h-6 sm:w-8 sm:h-8 bg-gradient-to-br from-blue-500 to-sky-500 rounded-full shadow-lg flex items-center justify-center ring-2 ring-white"
+                animate={{ 
+                  rotate: [0, 360],
+                  scale: [1, 1.1, 1]
+                }}
+                transition={{ 
+                  rotate: { duration: 20, repeat: Infinity, ease: "linear" },
+                  scale: { duration: 2, repeat: Infinity }
+                }}
+              >
+                <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 text-white" />
+              </motion.div>
             </motion.div>
-            <div className="text-center md:text-left">
-              <h3 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent mb-2 transition-all duration-500 group-hover:from-blue-900 group-hover:to-slate-800">
+            
+            <div className="space-y-2">
+              <motion.h3 
+                className="text-xl sm:text-2xl md:text-2xl lg:text-3xl font-bold bg-gradient-to-r from-slate-800 via-blue-700 to-slate-800 bg-clip-text text-transparent"
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.2 }}
+              >
                 Founder Name
-              </h3>
-              <p className="text-lg md:text-xl bg-gradient-to-r from-blue-600 to-sky-600 bg-clip-text text-transparent font-semibold transition-all duration-500 group-hover:from-blue-700 group-hover:to-sky-700">
+              </motion.h3>
+              <motion.p 
+                className="text-sm sm:text-base md:text-base lg:text-lg text-blue-500 font-semibold"
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.2 }}
+              >
                 Founder & Director
-              </p>
+              </motion.p>
+              
+              {/* Brighter enhanced decorative line */}
+              <motion.div 
+                className="hidden md:block mt-4 h-1.5 w-20 bg-gradient-to-r from-blue-500 via-sky-500 to-blue-500 rounded-full shadow-md"
+                initial={{ width: 0 }}
+                whileInView={{ width: 80 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: 0.3 }}
+              ></motion.div>
+              
+              {/* Brighter decorative dots for mobile */}
+              <div className="flex md:hidden items-center justify-center gap-2 mt-3">
+                <div className="w-2.5 h-2.5 bg-blue-500 rounded-full shadow-sm"></div>
+                <div className="w-2.5 h-2.5 bg-sky-500 rounded-full shadow-sm"></div>
+                <div className="w-2.5 h-2.5 bg-blue-500 rounded-full shadow-sm"></div>
+              </div>
             </div>
           </motion.div>
 
           {/* Right Side - Founder Message */}
           <motion.div 
-            initial={{ opacity: 0, x: 30 }}
+            className="md:col-span-2 md:pl-4 lg:pl-6"
+            initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="relative pl-0 md:pl-8 md:col-span-3"
+            transition={{ duration: 0.5, delay: 0.2 }}
           >
-            <div className="flex items-center gap-3 mb-6">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 mb-5 sm:mb-6">
               <motion.div 
-                className="h-1.5 w-16 bg-gradient-to-r from-blue-500 to-sky-500 rounded-full"
-                whileHover={{ width: 24 }}
-                transition={{ duration: 0.3 }}
+                className="h-2 sm:h-2.5 w-16 sm:w-20 bg-gradient-to-r from-blue-500 via-sky-500 to-blue-500 rounded-full shadow-lg"
+                initial={{ width: 0 }}
+                whileInView={{ width: 80 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8 }}
               ></motion.div>
-              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold">
-                <span className="text-slate-900">Message from the </span>
-                <span className="bg-gradient-to-r from-blue-600 to-sky-600 bg-clip-text text-transparent">Founder</span>
+              <h2 className="text-2xl sm:text-3xl md:text-3xl lg:text-4xl font-bold text-slate-800">
+                Message from the <span className="bg-gradient-to-r from-blue-500 via-sky-500 to-blue-500 bg-clip-text text-transparent">Founder</span>
               </h2>
             </div>
-            <div className="relative">
-              <div className="absolute -top-6 -left-4 text-7xl md:text-8xl text-blue-200/40 font-serif leading-none">"</div>
-              <p className="text-slate-700 text-base md:text-lg lg:text-xl leading-relaxed relative z-10 font-medium pl-6 md:pl-8">
-                Education is the most powerful weapon which you can use to change the world. At Heal Paradise 
-                School, we believe that every child deserves access to quality education, regardless of their 
-                circumstances. Our mission is to break barriers and create opportunities for those who need it most. 
-                Through compassion, dedication, and excellence, we are building a future where every child can dream, 
-                achieve, and inspire.
-              </p>
-              <div className="absolute -bottom-4 -right-4 text-7xl md:text-8xl text-blue-200/40 font-serif leading-none">"</div>
+            
+            <div className="space-y-5 sm:space-y-6">
+              {/* Enhanced brighter quote container */}
+              <motion.div 
+                className="relative pl-6 sm:pl-8 bg-white/80 backdrop-blur-sm rounded-r-xl sm:rounded-r-2xl p-4 sm:p-5 md:p-6 shadow-lg border border-blue-100/60"
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+              >
+                {/* Brighter decorative border gradient */}
+                <div className="absolute left-0 top-0 bottom-0 w-2 bg-gradient-to-b from-blue-500 via-sky-500 to-blue-500 rounded-l-full shadow-md"></div>
+                
+                {/* Brighter quote icon */}
+                <div className="absolute -left-3 top-4 w-6 h-6 sm:w-8 sm:h-8 bg-gradient-to-br from-blue-200 to-sky-200 rounded-full flex items-center justify-center shadow-lg ring-2 ring-white">
+                  <Quote className="w-3 h-3 sm:w-4 sm:h-4 text-blue-600" />
+                </div>
+                
+                <p className="text-sm sm:text-base md:text-base lg:text-lg text-slate-700 leading-relaxed sm:leading-relaxed">
+                  <span className="text-blue-500 font-semibold">Education is the most powerful weapon which you can use to change the world.</span> At Heal Paradise 
+                  School, we believe that every child deserves access to quality education, regardless of their 
+                  circumstances. Our mission is to break barriers and create opportunities for those who need it most. 
+                  Through compassion, dedication, and excellence, we are building a future where every child can dream, 
+                  achieve, and inspire.
+                </p>
+                
+                {/* Brighter closing quote mark */}
+                <div className="absolute -right-2 sm:-right-3 bottom-4 text-4xl sm:text-5xl md:text-6xl text-blue-300/60 font-serif leading-none">"</div>
+              </motion.div>
+              
+              {/* Enhanced brighter signature section */}
+              <motion.div 
+                className="pt-4 sm:pt-5 border-t-2 border-blue-200/80"
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.4 }}
+              >
+                <div className="flex items-center gap-3 sm:gap-4">
+                  <div className="h-0.5 flex-1 bg-gradient-to-r from-transparent via-blue-400 to-transparent"></div>
+                  <div className="flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-2 bg-gradient-to-r from-blue-100/90 to-sky-100/90 rounded-full border border-blue-200/80 shadow-md">
+                    <Quote className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600" />
+                    <p className="text-xs sm:text-sm text-slate-700 font-semibold italic">
+                      Founder's Vision
+                    </p>
+                  </div>
+                  <div className="h-0.5 flex-1 bg-gradient-to-l from-transparent via-blue-400 to-transparent"></div>
+                </div>
+              </motion.div>
             </div>
           </motion.div>
         </div>
       </motion.div>
-    </section>
+    </article>
 
     {/* Team/Leadership Carousel */}
-    <section className="mx-auto max-w-7xl px-6 pb-12">
-      <div className="text-center mb-8">
-        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 bg-clip-text text-transparent mb-3">
+    <section className="mx-auto max-w-7xl px-4 sm:px-6 pb-8">
+      <div className="text-center mb-6">
+        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 bg-clip-text text-transparent mb-2">
           Our Leadership Team
         </h2>
-        <p className="text-slate-600 text-lg max-w-2xl mx-auto">
+        <p className="text-slate-600 text-base md:text-lg max-w-2xl mx-auto">
           Meet the dedicated leaders who guide our mission of excellence and compassion
         </p>
       </div>
@@ -701,7 +805,7 @@ const LandingPage = () => {
 
  
     {/* Student & Parent Testimonials */}
-    <section className="mx-auto max-w-7xl px-4 sm:px-6 py-12 bg-gradient-to-br from-slate-50 via-white to-blue-50/30 relative overflow-hidden">
+    <section className="mx-auto max-w-7xl px-4 sm:px-6 py-8 bg-gradient-to-br from-slate-50 via-white to-blue-50/30 relative overflow-hidden">
       {/* Decorative background */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-0 left-1/4 w-72 h-72 bg-gradient-to-br from-blue-100/30 to-sky-100/30 rounded-full blur-3xl"></div>
@@ -717,7 +821,7 @@ const LandingPage = () => {
       >
         <div className="inline-flex items-center gap-2 rounded-full bg-blue-100/80 backdrop-blur-sm border border-blue-200/60 px-4 py-2 text-sm font-semibold text-blue-700 shadow-sm mb-4">
           <Quote className="w-4 h-4" />
-          Testimonials
+          About Heal
         </div>
         <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold mb-4">
           <span className="bg-gradient-to-r from-blue-600 via-sky-600 to-blue-600 bg-clip-text text-transparent">
@@ -730,7 +834,7 @@ const LandingPage = () => {
           Hear from students and parents about their experiences at Heal Paradise School
         </p>
       </motion.div>
-      <div className="grid md:grid-cols-3 gap-6 md:gap-8 relative z-10">
+      <div className="grid md:grid-cols-3 gap-4 md:gap-6 relative z-10">
         <motion.div 
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -849,19 +953,19 @@ const LandingPage = () => {
     </section>
 
     {/* Upcoming Events & News */}
-    <section className="mx-auto max-w-7xl px-4 sm:px-6 py-12">
+    <section className="mx-auto max-w-7xl px-4 sm:px-6 py-8">
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.5 }}
-        className="text-center mb-12"
+        className="text-center mb-8"
       >
-        <div className="inline-flex items-center gap-2 rounded-full bg-blue-100/80 backdrop-blur-sm border border-blue-200/60 px-4 py-2 text-sm font-semibold text-blue-700 shadow-sm mb-4">
+        <div className="inline-flex items-center gap-2 rounded-full bg-blue-100/80 backdrop-blur-sm border border-blue-200/60 px-4 py-2 text-sm font-semibold text-blue-700 shadow-sm mb-3">
           <Calendar className="w-4 h-4" />
           Latest Updates
         </div>
-        <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold mb-4">
+        <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold mb-3">
           <span className="bg-gradient-to-r from-blue-600 via-sky-600 to-blue-600 bg-clip-text text-transparent">
             Upcoming Events
           </span>
@@ -872,7 +976,7 @@ const LandingPage = () => {
           Stay updated with our latest events, achievements, and announcements
         </p>
       </motion.div>
-      <div className="grid md:grid-cols-3 gap-6 md:gap-8">
+      <div className="grid md:grid-cols-3 gap-4 md:gap-6">
         <motion.div 
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -950,10 +1054,10 @@ const LandingPage = () => {
         </motion.div>
       </div>
     </section>
-
-    {/* Mission */}
-    <section id="mission" className="mx-auto max-w-7xl px-6 py-12">
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+ 
+  {/* Mission */}
+    <section id="mission" className="mx-auto max-w-7xl px-4 sm:px-6 py-8">
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <SpotlightCard
           className="rounded-2xl border border-white/60 bg-neutral-200/40 backdrop-blur p-6"
           spotlightColor="#3b82f630"
@@ -996,13 +1100,13 @@ const LandingPage = () => {
   
 
     {/* Call To Action */}
-    <section id="admissions" className="mx-auto max-w-7xl px-4 sm:px-6 pb-12">
+    <section id="admissions" className="mx-auto max-w-7xl px-4 sm:px-6 pb-8">
       <motion.div 
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
-        className="relative overflow-hidden rounded-3xl border-2 border-blue-200/60 bg-gradient-to-br from-blue-50 via-white to-sky-50 p-8 md:p-12 lg:p-16 shadow-2xl"
+        className="relative overflow-hidden rounded-3xl border-2 border-blue-200/60 bg-gradient-to-br from-blue-50 via-white to-sky-50 p-6 md:p-8 lg:p-10 shadow-2xl"
       >
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
           <motion.div 
@@ -1046,7 +1150,7 @@ const LandingPage = () => {
               className="group relative rounded-full bg-gradient-to-r from-blue-600 via-sky-500 to-blue-600 px-8 py-4 text-base font-bold text-white shadow-2xl hover:shadow-blue-500/50 transition-all duration-300 overflow-hidden"
             >
               <span className="relative z-10 flex items-center gap-2">
-                Start Application
+              Start Application
                 <motion.svg 
                   className="w-5 h-5"
                   fill="none" 
@@ -1078,7 +1182,7 @@ const LandingPage = () => {
       </motion.div>
       
     </section>
-    </>
+    </main>
   )
 }
 

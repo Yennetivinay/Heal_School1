@@ -298,10 +298,10 @@ function AppleNavbar() {
     
     // Map paths to page imports - Navbar is in components/layout/, so need ../../ to reach pages/
     const pageMap = {
-      '/': () => import('../../pages/LandingPage'),
-      '/about': () => import('../../pages/AboutPage'),
-      '/awards': () => import('../../pages/AwardsPage'),
-      '/gallery': () => import('../../pages/GalleryPage'),
+      '/': () => import('../../Pages/LandingPage'),
+      '/about': () => import('../../Pages/AboutPage'),
+      '/awards': () => import('../../Pages/AwardsPage'),
+      '/gallery': () => import('../../Pages/GalleryPage'),
     };
     
     const preloadPage = pageMap[targetPath];

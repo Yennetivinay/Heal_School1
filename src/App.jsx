@@ -11,10 +11,10 @@ const Footer = lazy(() => import('./components/layout/Footer.jsx'))
 import ScrollToTop from './components/layout/ScrollToTop.jsx'
 
 // Lazy load pages for code splitting with optimized loading
-const AboutPage = lazy(() => import('./Pages/AboutPage'))
-const LandingPage = lazy(() => import('./Pages/LandingPage'))
-const AwardsPage = lazy(() => import('./Pages/AwardsPage'))
-const GalleryPage = lazy(() => import('./Pages/GalleryPage'))
+const AboutPage = lazy(() => import('./pages/AboutPage'))
+const LandingPage = lazy(() => import('./pages/LandingPage'))
+const AwardsPage = lazy(() => import('./pages/AwardsPage'))
+const GalleryPage = lazy(() => import('./pages/GalleryPage'))
 
 // Minimal loading fallback - empty to avoid showing loading text
 const LoadingFallback = () => null
@@ -35,10 +35,10 @@ const App = () => {
     const preloadPages = () => {
       // Preload all pages in parallel for instant navigation
       const preloadPromises = [
-        import('./Pages/AboutPage'),
-        import('./Pages/LandingPage'),
-        import('./Pages/AwardsPage'),
-        import('./Pages/GalleryPage'),
+        import('./pages/AboutPage'),
+        import('./pages/LandingPage'),
+        import('./pages/AwardsPage'),
+        import('./pages/GalleryPage'),
       ];
       
       // Preload without blocking - use Promise.allSettled to not fail if one fails

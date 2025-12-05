@@ -227,4 +227,3 @@ const AwardShowcase3D = ({ awards = [] }) => {
 };
 
 export default AwardShowcase3D;
-

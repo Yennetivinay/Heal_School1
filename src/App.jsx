@@ -9,10 +9,10 @@ const Footer = lazy(() => import('./components/layout/Footer.jsx'))
 const ScrollToTop = lazy(() => import('./components/layout/ScrollToTop.jsx'))
 
 // Lazy load pages for code splitting
-const AboutPage = lazy(() => import('./pages/AboutPage.jsx'))
-const LandingPage = lazy(() => import('./pages/LandingPage.jsx'))
-const AwardsPage = lazy(() => import('./pages/AwardsPage.jsx'))
-const GalleryPage = lazy(() => import('./pages/GalleryPage.jsx'))
+const AboutPage = lazy(() => import('./Pages/AboutPage'))
+const LandingPage = lazy(() => import('./Pages/LandingPage'))
+const AwardsPage = lazy(() => import('./Pages/AwardsPage'))
+const GalleryPage = lazy(() => import('./Pages/GalleryPage'))
 
 // Minimal loading fallback
 const LoadingFallback = () => (
